@@ -2,6 +2,11 @@
 
 modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
+## Credits
+
+- [quakegeneric](https://github.com/erysdren/quakegeneric)
+- [qrustyquake](https://github.com/cyanbun96/qrustyquake)
+
 ## License
 
 Copyright (C) 1996-1997 Id Software, Inc.\
