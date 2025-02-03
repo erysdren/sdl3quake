@@ -30,7 +30,7 @@ viddef_t	vid;				// global video state
 #define	BASEHEIGHT	240
 
 byte	vid_buffer[BASEWIDTH*BASEHEIGHT];
-short	zbuffer[BASEWIDTH*BASEHEIGHT];
+int16_t	zbuffer[BASEWIDTH*BASEHEIGHT];
 byte	*surfcache;
 size_t	surfcache_size;
 

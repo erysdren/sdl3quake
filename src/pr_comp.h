@@ -121,7 +121,7 @@ enum {
 typedef struct statement_s
 {
 	uint16_t	op;
-	short	a,b,c;
+	int16_t	a,b,c;
 } dstatement_t;
 
 typedef struct

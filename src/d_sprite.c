@@ -41,7 +41,7 @@ void D_SpriteDrawSpans (sspan_t *pspan)
 	float		sdivz, tdivz, zi, z, du, dv, spancountminus1;
 	float		sdivz8stepu, tdivz8stepu, zi8stepu;
 	byte		btemp;
-	short		*pz;
+	int16_t		*pz;
 
 	sstep = 0;	// keep compiler happy
 	tstep = 0;	// ditto

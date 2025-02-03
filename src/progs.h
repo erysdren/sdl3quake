@@ -38,7 +38,7 @@ typedef struct edict_s
 	link_t		area;				// linked to a division node or leaf
 	
 	int			num_leafs;
-	short		leafnums[MAX_ENT_LEAFS];
+	int16_t		leafnums[MAX_ENT_LEAFS];
 
 	entity_state_t	baseline;
 	

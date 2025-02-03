@@ -382,7 +382,7 @@ void D_DrawZSpans (espan_t *pspan)
 {
 	int				count, doublecount, izistep;
 	int				izi;
-	short			*pdest;
+	int16_t			*pdest;
 	unsigned		ltemp;
 	double			zi;
 	float			du, dv;
@@ -407,7 +407,7 @@ void D_DrawZSpans (espan_t *pspan)
 
 		if ((intptr_t)pdest & 0x02)
 		{
-			*pdest++ = (short)(izi >> 16);
+			*pdest++ = (int16_t)(izi >> 16);
 			izi += izistep;
 			count--;
 		}
@@ -426,7 +426,7 @@ void D_DrawZSpans (espan_t *pspan)
 		}
 
 		if (count & 1)
-			*pdest = (short)(izi >> 16);
+			*pdest = (int16_t)(izi >> 16);
 
 	} while ((pspan = pspan->pnext) != NULL);
 }

@@ -40,6 +40,6 @@ fixed16_t	sadjust, tadjust, bbextents, bbextentt;
 uint8_t			*cacheblock;
 int				cachewidth;
 uint8_t			*d_viewbuffer;
-short			*d_pzbuffer;
+int16_t			*d_pzbuffer;
 unsigned int	d_zrowbytes;
 unsigned int	d_zwidth;

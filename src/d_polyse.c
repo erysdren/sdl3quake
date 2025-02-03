@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct {
 	void			*pdest;
-	short			*pz;
+	int16_t			*pz;
 	int				count;
 	byte			*ptex;
 	int				sfrac, tfrac, light, zi;
@@ -84,7 +84,7 @@ spanpackage_t			*a_spans;
 spanpackage_t			*d_pedgespanpackage;
 static int				ystart;
 byte					*d_pdest, *d_ptex;
-short					*d_pz;
+int16_t					*d_pz;
 int						d_sfrac, d_tfrac, d_light, d_zi;
 int						d_ptexextrastep, d_sfracextrastep;
 int						d_tfracextrastep, d_lightextrastep, d_pdestextrastep;
@@ -148,7 +148,7 @@ D_PolysetDrawFinalVerts
 void D_PolysetDrawFinalVerts (finalvert_t *fv, int numverts)
 {
 	int		i, z;
-	short	*zbuf;
+	int16_t	*zbuf;
 
 	for (i=0 ; i<numverts ; i++, fv++)
 	{
@@ -313,7 +313,7 @@ void D_PolysetRecursiveTriangle (int *lp1, int *lp2, int *lp3)
 	int		d;
 	int		new[6];
 	int		z;
-	short	*zbuf;
+	int16_t	*zbuf;
 
 	d = lp2[0] - lp1[0];
 	if (d < -1 || d > 1)
@@ -594,7 +594,7 @@ void D_PolysetDrawSpans8 (spanpackage_t *pspanpackage)
 	int		lsfrac, ltfrac;
 	int		llight;
 	int		lzi;
-	short	*lpz;
+	int16_t	*lpz;
 
 	do
 	{
