@@ -7,8 +7,8 @@ LIBEXT?=.a
 BINEXT?=
 OBJEXT?=.o
 
-override CFLAGS+=-std=c23 $(shell $(PKGCONFIG) $(PKGS) --cflags)
-override LDFLAGS+=$(shell $(PKGCONFIG) $(PKGS) --libs) -lm
+CFLAGS+=-std=c23 $(shell $(PKGCONFIG) $(PKGS) --cflags)
+LDFLAGS+=$(shell $(PKGCONFIG) $(PKGS) --libs) -lm
 
 LIBNAME?=libsdl3quake$(LIBEXT)
 EXECNAME?=sdl3quake$(BINEXT)
