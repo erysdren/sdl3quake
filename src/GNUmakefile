@@ -30,7 +30,7 @@ LIBOBJS =\
 	r_surf$(OBJEXT) r_vars$(OBJEXT) sbar$(OBJEXT) screen$(OBJEXT)\
 	snd_null$(OBJEXT) sv_main$(OBJEXT) sv_move$(OBJEXT) sv_phys$(OBJEXT)\
 	sv_user$(OBJEXT) sys_null$(OBJEXT) vid_null$(OBJEXT) view$(OBJEXT)\
-	wad$(OBJEXT) world$(OBJEXT) zone$(OBJEXT) quakegeneric$(OBJEXT)
+	wad$(OBJEXT) world$(OBJEXT) zone$(OBJEXT) libsdl3quake$(OBJEXT)
 
 EXECOBJS=sdl3quake$(OBJEXT)
 

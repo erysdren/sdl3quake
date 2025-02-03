@@ -21,7 +21,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "quakedef.h"
 
-#include "quakegeneric.h"
+#include "libsdl3quake.h"
 
 #define JOY_ABSOLUTE_AXIS	0x00000000		// control like a joystick
 #define JOY_RELATIVE_AXIS	0x00000010		// control like a mouse, spinner, trackball
