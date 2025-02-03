@@ -10,6 +10,10 @@ OBJEXT?=.o
 CFLAGS+=-std=c23 $(shell $(PKGCONFIG) $(PKGS) --cflags)
 LDFLAGS+=$(shell $(PKGCONFIG) $(PKGS) --libs) -lm
 
+ifeq ($(PARANOID),1)
+CFLAGS+=-Wall -Wextra
+endif
+
 LIBNAME?=libsdl3quake$(LIBEXT)
 EXECNAME?=sdl3quake$(BINEXT)
 
