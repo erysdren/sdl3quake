@@ -237,7 +237,7 @@ void D_DrawSurfaces (void)
 			{
 				pface = s->data;
 				miplevel = 0;
-				cacheblock = (pixel_t *)
+				cacheblock = (uint8_t *)
 						((byte *)pface->texinfo->texture +
 						pface->texinfo->texture->offsets[0]);
 				cachewidth = 64;
@@ -299,7 +299,7 @@ void D_DrawSurfaces (void)
 			// FIXME: make this passed in to D_CacheSurface
 				pcurrentcache = D_CacheSurface (pface, miplevel);
 
-				cacheblock = (pixel_t *)pcurrentcache->data;
+				cacheblock = (uint8_t *)pcurrentcache->data;
 				cachewidth = pcurrentcache->width;
 
 				D_CalcGradients (pface);

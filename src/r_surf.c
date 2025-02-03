@@ -512,7 +512,7 @@ void R_DrawSurfaceBlock8_mip3 (void)
 R_GenTurbTile
 ================
 */
-void R_GenTurbTile (pixel_t *pbasetex, void *pdest)
+void R_GenTurbTile (uint8_t *pbasetex, void *pdest)
 {
 	int		*turb;
 	int		i, j, s, t;
@@ -542,7 +542,7 @@ void R_GenTile (msurface_t *psurf, void *pdest)
 {
 	if (psurf->flags & SURF_DRAWTURB)
 	{
-		R_GenTurbTile ((pixel_t *)
+		R_GenTurbTile ((uint8_t *)
 				((byte *)psurf->texinfo->texture + psurf->texinfo->texture->offsets[0]), pdest);
 	}
 	else if (psurf->flags & SURF_DRAWSKY)
