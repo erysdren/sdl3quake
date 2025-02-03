@@ -633,8 +633,8 @@ void Mod_LoadEdges (lump_t *l)
 
 	for ( i=0 ; i<count ; i++, in++, out++)
 	{
-		out->v[0] = (unsigned short)LittleShort(in->v[0]);
-		out->v[1] = (unsigned short)LittleShort(in->v[1]);
+		out->v[0] = (uint16_t)LittleShort(in->v[0]);
+		out->v[1] = (uint16_t)LittleShort(in->v[1]);
 	}
 }
 
@@ -1350,7 +1350,7 @@ void * Mod_LoadAliasSkin (void * pin, int *pskinindex, int skinsize,
 {
 	int		i;
 	byte	*pskin, *pinskin;
-	unsigned short	*pusskin;
+	uint16_t	*pusskin;
 
 	pskin = Hunk_AllocName (skinsize, loadname);
 	pinskin = (byte *)pin;
@@ -1656,7 +1656,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 	dspriteframe_t		*pinframe;
 	mspriteframe_t		*pspriteframe;
 	int					i, width, height, size, origin[2];
-	unsigned short		*ppixout;
+	uint16_t		*ppixout;
 	byte				*ppixin;
 
 	pinframe = (dspriteframe_t *)pin;

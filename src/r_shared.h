@@ -145,7 +145,7 @@ typedef struct edge_s
 	fixed16_t		u;
 	fixed16_t		u_step;
 	struct edge_s	*prev, *next;
-	unsigned short	surfs[2];
+	uint16_t	surfs[2];
 	struct edge_s	*nextremove;
 	float			nearzi;
 	medge_t			*owner;

@@ -56,7 +56,7 @@ char	com_cmdline[CMDLINE_LENGTH];
 qboolean		standard_quake = true, rogue, hipnotic;
 
 // this graphic needs to be in the pak file to use registered features
-unsigned short pop[] =
+uint16_t pop[] =
 {
  0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 ,0x0000,0x0000,0x6600,0x0000,0x0000,0x0000,0x6600,0x0000
@@ -1023,7 +1023,7 @@ being registered.
 void COM_CheckRegistered (void)
 {
 	int             h;
-	unsigned short  check[128];
+	uint16_t  check[128];
 	int                     i;
 
 	COM_OpenFile("gfx/pop.lmp", &h);
@@ -1041,7 +1041,7 @@ void COM_CheckRegistered (void)
 	COM_CloseFile (h);
 	
 	for (i=0 ; i<128 ; i++)
-		if (pop[i] != (unsigned short)BigShort (check[i]))
+		if (pop[i] != (uint16_t)BigShort (check[i]))
 			Sys_Error ("Corrupted data file.");
 	
 	Cvar_Set ("cmdline", com_cmdline);
@@ -1623,7 +1623,7 @@ pack_t *COM_LoadPackFile (char *packfile)
 	pack_t                  *pack;
 	int                             packhandle;
 	dpackfile_t             info[MAX_FILES_IN_PACK];
-	unsigned short          crc;
+	uint16_t          crc;
 
 	if (Sys_FileOpenRead (packfile, &packhandle) == -1)
 	{

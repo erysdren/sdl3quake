@@ -158,8 +158,8 @@ typedef struct
 	short		children[2];	// negative numbers are -(leafs+1), not nodes
 	short		mins[3];		// for sphere culling
 	short		maxs[3];
-	unsigned short	firstface;
-	unsigned short	numfaces;	// counting both sides
+	uint16_t	firstface;
+	uint16_t	numfaces;	// counting both sides
 } dnode_t;
 
 typedef struct
@@ -181,7 +181,7 @@ typedef struct texinfo_s
 // counterclockwise use of the edge in a face
 typedef struct
 {
-	unsigned short	v[2];		// vertex numbers
+	uint16_t	v[2];		// vertex numbers
 } dedge_t;
 
 #define	MAXLIGHTMAPS	4
@@ -218,8 +218,8 @@ typedef struct
 	short		mins[3];			// for frustum culling
 	short		maxs[3];
 
-	unsigned short		firstmarksurface;
-	unsigned short		nummarksurfaces;
+	uint16_t		firstmarksurface;
+	uint16_t		nummarksurfaces;
 
 	byte		ambient_level[NUM_AMBIENTS];
 } dleaf_t;
@@ -275,7 +275,7 @@ extern	int			numedges;
 extern	dedge_t		dedges[MAX_MAP_EDGES];
 
 extern	int			nummarksurfaces;
-extern	unsigned short	dmarksurfaces[MAX_MAP_MARKSURFACES];
+extern	uint16_t	dmarksurfaces[MAX_MAP_MARKSURFACES];
 
 extern	int			numsurfedges;
 extern	int			dsurfedges[MAX_MAP_SURFEDGES];

@@ -136,7 +136,7 @@ void Draw_Character (int x, int y, int num)
 {
 	byte			*dest;
 	byte			*source;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int				drawline;	
 	int				row, col;
 
@@ -256,7 +256,7 @@ Draw_Pic
 void Draw_Pic (int x, int y, qpic_t *pic)
 {
 	byte			*dest, *source;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int				v, u;
 
 	if ((x < 0) ||
@@ -288,7 +288,7 @@ Draw_TransPic
 void Draw_TransPic (int x, int y, qpic_t *pic)
 {
 	byte	*dest, *source, tbyte;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -352,7 +352,7 @@ Draw_TransPicTranslate
 void Draw_TransPicTranslate (int x, int y, qpic_t *pic, byte *translation)
 {
 	byte	*dest, *source, tbyte;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -441,7 +441,7 @@ void Draw_ConsoleBackground (int lines)
 {
 	int				x, y, v;
 	byte			*src, *dest;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	int				f, fstep;
 	qpic_t			*conback;
 	char			ver[100];
@@ -608,7 +608,7 @@ Fills a box of pixels with a single color
 void Draw_Fill (int x, int y, int w, int h, int c)
 {
 	byte			*dest;
-	unsigned short	*pusdest;
+	uint16_t	*pusdest;
 	unsigned		uc;
 	int				u, v;
 
