@@ -75,7 +75,7 @@ typedef struct
 	int		entnum;			// to allow overriding a specific sound
 	int		entchannel;		//
 	vec3_t	origin;			// origin of sound effect
-	vec_t	dist_mult;		// distance multiplier (attenuation/clipK)
+	float	dist_mult;		// distance multiplier (attenuation/clipK)
 	int		master_vol;		// 0-255 master volume
 } channel_t;
 
@@ -153,7 +153,7 @@ extern vec3_t listener_right;
 extern vec3_t listener_up;
 extern volatile dma_t *shm;
 extern volatile dma_t sn;
-extern vec_t sound_nominal_clip_dist;
+extern float sound_nominal_clip_dist;
 
 extern	cvar_t loadas8bit;
 extern	cvar_t bgmvolume;

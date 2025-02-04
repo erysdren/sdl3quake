@@ -328,7 +328,7 @@ R_DrawSolidClippedSubmodelPolygons
 void R_DrawSolidClippedSubmodelPolygons (model_t *pmodel)
 {
 	int			i, j, lindex;
-	vec_t		dot;
+	float		dot;
 	msurface_t	*psurf;
 	int			numsurfaces;
 	mplane_t	*pplane;
@@ -410,7 +410,7 @@ R_DrawSubmodelPolygons
 void R_DrawSubmodelPolygons (model_t *pmodel, int clipflags)
 {
 	int			i;
-	vec_t		dot;
+	float		dot;
 	msurface_t	*psurf;
 	int			numsurfaces;
 	mplane_t	*pplane;
