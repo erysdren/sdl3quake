@@ -450,7 +450,7 @@ void Draw_ConsoleBackground (int lines)
 
 // hack the version number directly into the pic
 	dest = conback->data + 320 - 43 + 320*186;
-	sprintf (ver, "%4.2f", VERSION);
+	sprintf (ver, "%4.2f", GAMEVERSION);
 
 	for (x=0 ; x<strlen(ver) ; x++)
 		Draw_CharToConback (ver[x], dest+(x<<3));
