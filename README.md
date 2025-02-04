@@ -2,8 +2,13 @@
 
 modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
-**NOTE:** will not run currently because it still needs some 64-bit correctness
-fixes in the QuakeC VM
+## Notes
+
+- lacks 64-bit stability
+- lacks audio
+- lacks netplay
+- lacks all extended Quake engine features from the past 29 years
+- does not actually use SDL3 yet
 
 ## Building
 
