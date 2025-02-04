@@ -4,6 +4,29 @@ modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
 to build, go into the `src` folder and type `make`.
 
+## Command Line Arguments
+
+| Name             | Arguments                             | Description                                                   |
+|------------------|---------------------------------------|---------------------------------------------------------------|
+| `-surfcachesize` | \[surface cache size in kilobytes\]   |                                                               |
+| `-zone`          | \[zone memory size in kilobytes\]     |                                                               |
+| `-dedicated`     | \[maximum number of clients\]         | enables dedicated server mode                                 |
+| `-listen`        | \[maximum number of clients\]         | enables listen server mode                                    |
+| `-particles`     | \[maximum number of particles\]       |                                                               |
+| `-playback`      |                                       | enables VCR playback mode                                     |
+| `-record`        |                                       | enables VCR recording mode                                    |
+| `-minmemory`     | \[minimum available memory in bytes\] | if the engine cannot allocate this much memory, it will abort |
+| `-safe`          |                                       | enables safe mode                                             |
+| `-condebug`      |                                       | log all console messages to `qconsole.log`                    |
+| `-port`          | \[port number\]                       |                                                               |
+| `-udpport`       | \[udp port number\]                   |                                                               |
+| `-ipxport`       | \[ipx port number\]                   |                                                               |
+| `-hipnotic`      |                                       | load mission pack 1 data (scourge of armagon)                 |
+| `-rogue`         |                                       | load mission pack 2 data (dissolution of eternity)            |
+| `-game`          | \[game directory\]                    | load additional game data from specified directory            |
+| `-path`          | \[directory or pak file\] \[...\]     | add specified directories or pak files to engine hierarchy    |
+| `-basedir`       | \[base directory\]                    | overrides engine base directory                               |
+
 ## Credits
 
 - [quakegeneric](https://github.com/erysdren/quakegeneric)
