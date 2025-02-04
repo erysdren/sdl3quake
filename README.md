@@ -7,7 +7,10 @@ fixes in the QuakeC VM
 
 ## Building
 
-to build, go into the `src` folder and type `make`.
+```shell
+cmake -Bcmake-build -DCMAKE_BUILD_TYPE=Release .
+cmake --build cmake-build --target sdl3quake
+```
 
 ## Command Line Arguments
 
