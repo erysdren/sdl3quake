@@ -53,7 +53,6 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define	VID_LockBuffer()
 #define	VID_UnlockBuffer()
 
-// !!! if this is changed, it must be changed in d_ifacea.h too !!!
 #define CACHE_SIZE	32		// used to align key data structures
 
 #define UNUSED(x)	(x = x)	// for pesky compiler / lint warnings

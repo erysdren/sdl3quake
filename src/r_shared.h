@@ -28,7 +28,6 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define	MAXVERTS	16					// max points in a surface polygon
 #define MAXWORKINGVERTS	(MAXVERTS+4)	// max points in an intermediate
 										//  polygon (while processing)
-// !!! if this is changed, it must be changed in d_ifacea.h too !!!
 #define	MAXHEIGHT		1024
 #define	MAXWIDTH		1280
 #define MAXDIMENSION	((MAXHEIGHT > MAXWIDTH) ? MAXHEIGHT : MAXWIDTH)
@@ -67,7 +66,6 @@ extern	entity_t		*currententity;
 #define MINSURFACES			NUMSTACKSURFACES
 #define	MAXSPANS			3000
 
-// !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct espan_s
 {
 	int				u, v, count;
@@ -134,7 +132,7 @@ extern int	ubasestep, errorterm, erroradjustup, erroradjustdown;
 #define ALIAS_RIGHT_CLIP			0x0004
 #define ALIAS_BOTTOM_CLIP			0x0008
 #define ALIAS_Z_CLIP				0x0010
-// !!! if this is changed, it must be changed in d_ifacea.h too !!!
+
 #define ALIAS_ONSEAM				0x0020	// also defined in modelgen.h;
 											//  must be kept in sync
 #define ALIAS_XY_CLIP_MASK			0x000F
