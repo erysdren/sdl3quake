@@ -27,8 +27,8 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 //define	PARANOID			// speed sapping error checking
 
-#ifndef GAMENAME
-#define	GAMENAME "id1"
+#ifndef GAMEDIR
+#define	GAMEDIR "id1"
 #endif
 
 #ifndef GAMEEXEC

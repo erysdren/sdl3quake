@@ -1713,7 +1713,7 @@ void COM_InitFilesystem (void)
 
 //
 // -basedir <path>
-// Overrides the system supplied base directory (under GAMENAME)
+// Overrides the system supplied base directory (under GAMEDIR)
 //
 	i = COM_CheckParm ("-basedir");
 	if (i && i < com_argc-1)
@@ -1730,9 +1730,9 @@ void COM_InitFilesystem (void)
 	}
 
 //
-// start up with GAMENAME by default (id1)
+// start up with GAMEDIR by default (id1)
 //
-	COM_AddGameDirectory (va("%s/"GAMENAME, basedir) );
+	COM_AddGameDirectory (va("%s/"GAMEDIR, basedir) );
 
 	if (COM_CheckParm ("-rogue"))
 		COM_AddGameDirectory (va("%s/rogue", basedir) );
