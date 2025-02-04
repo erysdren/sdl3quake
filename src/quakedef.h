@@ -35,6 +35,10 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define GAMEEXEC "quake.rc"
 #endif
 
+#ifndef GAMETITLE
+#define GAMETITLE "Quake"
+#endif
+
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>

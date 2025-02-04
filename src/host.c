@@ -779,7 +779,7 @@ void Host_Init (quakeparms_t *parms)
 
 	host_initialized = true;
 	
-	Sys_Printf ("========Quake Initialized=========\n");	
+	Sys_Printf ("========"GAMETITLE" Initialized=========\n");
 }
 
 
