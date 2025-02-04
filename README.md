@@ -2,6 +2,8 @@
 
 modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
+to build, go into the `src` folder and type `make`.
+
 ## Credits
 
 - [quakegeneric](https://github.com/erysdren/quakegeneric)
