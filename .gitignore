@@ -1,8 +1,2 @@
-*.a
-*.o
-*.exe
-*.obj
 untracked/
 cmake-build*/
-src/sdl3quake
-src/id1/
