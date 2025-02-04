@@ -46,6 +46,7 @@ void SV_Init (void)
 	extern	cvar_t	sv_accelerate;
 	extern	cvar_t	sv_idealpitchscale;
 	extern	cvar_t	sv_aim;
+	extern	cvar_t	sv_stepheight;
 
 	Cvar_RegisterVariable (&sv_maxvelocity);
 	Cvar_RegisterVariable (&sv_gravity);
@@ -57,6 +58,7 @@ void SV_Init (void)
 	Cvar_RegisterVariable (&sv_idealpitchscale);
 	Cvar_RegisterVariable (&sv_aim);
 	Cvar_RegisterVariable (&sv_nostep);
+	Cvar_RegisterVariable (&sv_stepheight);
 
 	for (i=0 ; i<MAX_MODELS ; i++)
 		sprintf (localmodels[i], "*%i", i);

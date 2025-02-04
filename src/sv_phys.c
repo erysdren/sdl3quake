@@ -44,6 +44,7 @@ cvar_t	sv_stopspeed = {"sv_stopspeed","100"};
 cvar_t	sv_gravity = {"sv_gravity","800",false,true};
 cvar_t	sv_maxvelocity = {"sv_maxvelocity","2000"};
 cvar_t	sv_nostep = {"sv_nostep","0"};
+cvar_t	sv_stepheight = {"sv_stepheight","18",false,true};
 
 #define	MOVE_EPSILON	0.01
 
@@ -770,7 +771,6 @@ SV_WalkMove
 Only used by players
 ======================
 */
-#define	STEPSIZE	18
 void SV_WalkMove (edict_t *ent)
 {
 	vec3_t		upmove, downmove;
@@ -816,8 +816,8 @@ void SV_WalkMove (edict_t *ent)
 
 	VectorCopy (vec3_origin, upmove);
 	VectorCopy (vec3_origin, downmove);
-	upmove[2] = STEPSIZE;
-	downmove[2] = -STEPSIZE + oldvel[2]*host_frametime;
+	upmove[2] = sv_stepheight.value;
+	downmove[2] = -sv_stepheight.value + oldvel[2]*host_frametime;
 
 // move up
 	SV_PushEntity (ent, upmove);	// FIXME: don't link?
