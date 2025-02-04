@@ -2,6 +2,11 @@
 
 modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
+**NOTE:** will not run currently because it still needs some 64-bit correctness
+fixes in the QuakeC VM
+
+## Building
+
 to build, go into the `src` folder and type `make`.
 
 ## Command Line Arguments
