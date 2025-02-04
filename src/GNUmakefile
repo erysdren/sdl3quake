@@ -7,8 +7,8 @@ LIBEXT?=.a
 BINEXT?=
 OBJEXT?=.o
 
-CFLAGS+=-std=c23 $(shell $(PKGCONFIG) $(PKGS) --cflags)
-LDFLAGS+=$(shell $(PKGCONFIG) $(PKGS) --libs) -lm
+CFLAGS+=-m32 -std=c23 $(shell $(PKGCONFIG) $(PKGS) --cflags)
+LDFLAGS+=-m32 $(shell $(PKGCONFIG) $(PKGS) --libs) -lm
 
 ifeq ($(PARANOID),1)
 CFLAGS+=-Wall -Wextra
