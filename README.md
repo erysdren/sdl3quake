@@ -13,8 +13,6 @@ to build, go into the `src` folder and type `make`.
 | `-dedicated`     | \[maximum number of clients\]         | enables dedicated server mode                                 |
 | `-listen`        | \[maximum number of clients\]         | enables listen server mode                                    |
 | `-particles`     | \[maximum number of particles\]       |                                                               |
-| `-playback`      |                                       | enables VCR playback mode                                     |
-| `-record`        |                                       | enables VCR recording mode                                    |
 | `-minmemory`     | \[minimum available memory in bytes\] | if the engine cannot allocate this much memory, it will abort |
 | `-safe`          |                                       | enables safe mode                                             |
 | `-condebug`      |                                       | log all console messages to `qconsole.log`                    |
