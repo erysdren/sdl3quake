@@ -49,42 +49,42 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // must match definition in spritegn.h
 #ifndef SYNCTYPE_T
 #define SYNCTYPE_T
-typedef enum {ST_SYNC=0, ST_RAND } synctype_t;
+typedef enum : int32_t { ST_SYNC=0, ST_RAND } synctype_t;
 #endif
 
-typedef enum { ALIAS_SINGLE=0, ALIAS_GROUP } aliasframetype_t;
+typedef enum : int32_t { ALIAS_SINGLE=0, ALIAS_GROUP } aliasframetype_t;
 
-typedef enum { ALIAS_SKIN_SINGLE=0, ALIAS_SKIN_GROUP } aliasskintype_t;
+typedef enum : int32_t { ALIAS_SKIN_SINGLE=0, ALIAS_SKIN_GROUP } aliasskintype_t;
 
 typedef struct {
-	int			ident;
-	int			version;
+	int32_t		ident;
+	int32_t		version;
 	vec3_t		scale;
 	vec3_t		scale_origin;
 	float		boundingradius;
 	vec3_t		eyeposition;
-	int			numskins;
-	int			skinwidth;
-	int			skinheight;
-	int			numverts;
-	int			numtris;
-	int			numframes;
+	int32_t		numskins;
+	int32_t		skinwidth;
+	int32_t		skinheight;
+	int32_t		numverts;
+	int32_t		numtris;
+	int32_t		numframes;
 	synctype_t	synctype;
-	int			flags;
+	int32_t		flags;
 	float		size;
 } mdl_t;
 
 // TODO: could be shorts
 
 typedef struct {
-	int		onseam;
-	int		s;
-	int		t;
+	int32_t	onseam;
+	int32_t	s;
+	int32_t	t;
 } stvert_t;
 
 typedef struct dtriangle_s {
-	int					facesfront;
-	int					vertindex[3];
+	int32_t				facesfront;
+	int32_t				vertindex[3];
 } dtriangle_t;
 
 #define DT_FACES_FRONT				0x0010
@@ -93,8 +93,8 @@ typedef struct dtriangle_s {
 // load this data
 
 typedef struct {
-	byte	v[3];
-	byte	lightnormalindex;
+	uint8_t	v[3];
+	uint8_t	lightnormalindex;
 } trivertx_t;
 
 typedef struct {
@@ -104,13 +104,13 @@ typedef struct {
 } daliasframe_t;
 
 typedef struct {
-	int			numframes;
+	int32_t		numframes;
 	trivertx_t	bboxmin;	// lightnormal isn't used
 	trivertx_t	bboxmax;	// lightnormal isn't used
 } daliasgroup_t;
 
 typedef struct {
-	int			numskins;
+	int32_t		numskins;
 } daliasskingroup_t;
 
 typedef struct {
