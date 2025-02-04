@@ -479,7 +479,7 @@ D_PolysetSetUpForLineScan
 void D_PolysetSetUpForLineScan(fixed8_t startvertu, fixed8_t startvertv,
 		fixed8_t endvertu, fixed8_t endvertv)
 {
-	double		dm, dn;
+	float		dm, dn;
 	int			tm, tn;
 	adivtab_t	*ptemp;
 
@@ -500,8 +500,8 @@ void D_PolysetSetUpForLineScan(fixed8_t startvertu, fixed8_t startvertv,
 	}
 	else
 	{
-		dm = (double)tm;
-		dn = (double)tn;
+		dm = (float)tm;
+		dn = (float)tn;
 
 		FloorDivMod (dm, dn, &ubasestep, &erroradjustup);
 
@@ -528,15 +528,15 @@ void D_PolysetCalcGradients (int skinwidth)
 
 	ystepdenominv = -xstepdenominv;
 
-// ceil () for light so positive steps are exaggerated, negative steps
+// ceilf () for light so positive steps are exaggerated, negative steps
 // diminished,  pushing us away from underflow toward overflow. Underflow is
 // very visible, overflow is very unlikely, because of ambient lighting
 	t0 = r_p0[4] - r_p2[4];
 	t1 = r_p1[4] - r_p2[4];
 	r_lstepx = (int)
-			ceil((t1 * p01_minus_p21 - t0 * p11_minus_p21) * xstepdenominv);
+			ceilf((t1 * p01_minus_p21 - t0 * p11_minus_p21) * xstepdenominv);
 	r_lstepy = (int)
-			ceil((t1 * p00_minus_p20 - t0 * p10_minus_p20) * ystepdenominv);
+			ceilf((t1 * p00_minus_p20 - t0 * p10_minus_p20) * ystepdenominv);
 
 	t0 = r_p0[2] - r_p2[2];
 	t1 = r_p1[2] - r_p2[2];
@@ -767,7 +767,7 @@ void D_RasterizeAliasPolySmooth (void)
 
 	// for negative steps in x along left edge, bias toward overflow rather than
 	// underflow (sort of turning the floor () we did in the gradient calcs into
-	// ceil (), but plus a little bit)
+	// ceilf (), but plus a little bit)
 		if (ubasestep < 0)
 			working_lstepx = r_lstepx - 1;
 		else

@@ -679,7 +679,7 @@ void Mod_LoadTexinfo (lump_t *l)
 		if (len1 + len2 < 0.001)
 			out->mipadjust = 1;		// don't crash
 		else
-			out->mipadjust = 1 / floor( (len1+len2)/2 + 0.1 );
+			out->mipadjust = 1 / floorf( (len1+len2)/2 + 0.1 );
 #endif
 
 		miptex = LittleLong (in->miptex);
@@ -747,8 +747,8 @@ void CalcSurfaceExtents (msurface_t *s)
 
 	for (i=0 ; i<2 ; i++)
 	{	
-		bmins[i] = floor(mins[i]/16);
-		bmaxs[i] = ceil(maxs[i]/16);
+		bmins[i] = floorf(mins[i]/16);
+		bmaxs[i] = ceilf(maxs[i]/16);
 
 		s->texturemins[i] = bmins[i] * 16;
 		s->extents[i] = (bmaxs[i] - bmins[i]) * 16;

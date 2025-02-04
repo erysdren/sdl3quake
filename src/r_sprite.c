@@ -312,7 +312,7 @@ void R_DrawSprite (void)
 		VectorNormalize (tvec);
 		dot = tvec[2];	// same as DotProduct (tvec, r_spritedesc.vup) because
 						//  r_spritedesc.vup is 0, 0, 1
-		if ((dot > 0.999848) || (dot < -0.999848))	// cos(1 degree) = 0.999848
+		if ((dot > 0.999848) || (dot < -0.999848))	// cosf(1 degree) = 0.999848
 			return;
 		r_spritedesc.vup[0] = 0;
 		r_spritedesc.vup[1] = 0;
@@ -351,7 +351,7 @@ void R_DrawSprite (void)
 	// the two vectors are less than 1 degree apart
 		dot = vpn[2];	// same as DotProduct (vpn, r_spritedesc.vup) because
 						//  r_spritedesc.vup is 0, 0, 1
-		if ((dot > 0.999848) || (dot < -0.999848))	// cos(1 degree) = 0.999848
+		if ((dot > 0.999848) || (dot < -0.999848))	// cosf(1 degree) = 0.999848
 			return;
 		r_spritedesc.vup[0] = 0;
 		r_spritedesc.vup[1] = 0;
@@ -379,8 +379,8 @@ void R_DrawSprite (void)
 	// that plane around the center according to the sprite entity's roll
 	// angle. So vpn stays the same, but vright and vup rotate
 		angle = currententity->angles[ROLL] * (M_PI*2 / 360);
-		sr = sin(angle);
-		cr = cos(angle);
+		sr = sinf(angle);
+		cr = cosf(angle);
 
 		for (i=0 ; i<3 ; i++)
 		{
