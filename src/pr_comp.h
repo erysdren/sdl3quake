@@ -19,8 +19,8 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 // this file is shared by quake and qcc
 
-typedef int	func_t;
-typedef int	string_t;
+typedef int32_t	func_t;
+typedef int32_t	string_t;
 
 typedef enum {ev_void, ev_string, ev_float, ev_vector, ev_entity, ev_field, ev_function, ev_pointer} etype_t;
 

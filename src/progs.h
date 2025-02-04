@@ -26,8 +26,8 @@ typedef union eval_s
 	float			_float;
 	float			vector[3];
 	func_t			function;
-	int				_int;
-	int				edict;
+	int32_t			_int;
+	int32_t			edict;
 } eval_t;	
 
 #define	MAX_ENT_LEAFS	16
