@@ -272,12 +272,7 @@ void SV_ConnectClient (int clientnum)
 	client->message.data = client->msgbuf;
 	client->message.maxsize = sizeof(client->msgbuf);
 	client->message.allowoverflow = true;		// we can catch it
-
-#ifdef IDGODS
-	client->privileged = IsID(&client->netconnection->addr);
-#else	
-	client->privileged = false;				
-#endif
+	client->privileged = false;
 
 	if (sv.loadgame)
 		memcpy (client->spawn_parms, spawn_parms, sizeof(spawn_parms));
