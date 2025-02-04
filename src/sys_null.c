@@ -151,7 +151,7 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
 }
 
 
-void Sys_Error (char *error, ...)
+[[ noreturn ]] void Sys_Error (char *error, ...)
 {
 	va_list         argptr;
 
