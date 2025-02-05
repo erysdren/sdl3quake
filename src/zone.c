@@ -147,7 +147,7 @@ Z_CheckHeap ();	// DEBUG
 	buf = Z_TagMalloc (size, 1);
 	if (!buf)
 		Sys_Error ("Z_Malloc: failed on allocation of %i bytes",size);
-	Q_memset (buf, 0, size);
+	memset (buf, 0, size);
 
 	return buf;
 }
@@ -582,9 +582,9 @@ void Cache_Move ( cache_system_t *c)
 	{
 //		Con_Printf ("cache_move ok\n");
 
-		Q_memcpy ( new+1, c+1, c->size - sizeof(cache_system_t) );
+		memcpy ( new+1, c+1, c->size - sizeof(cache_system_t) );
 		new->user = c->user;
-		Q_memcpy (new->name, c->name, sizeof(new->name));
+		memcpy (new->name, c->name, sizeof(new->name));
 		Cache_Free (c->user);
 		new->user->data = (void *)(new+1);
 	}

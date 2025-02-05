@@ -118,7 +118,7 @@ void Cbuf_InsertText (char *text)
 	if (templen)
 	{
 		temp = Z_Malloc (templen);
-		Q_memcpy (temp, cmd_text.data, templen);
+		memcpy (temp, cmd_text.data, templen);
 		SZ_Clear (&cmd_text);
 	}
 	else
@@ -177,7 +177,7 @@ void Cbuf_Execute (void)
 		{
 			i++;
 			cmd_text.cursize -= i;
-			Q_memcpy (text, text+i, cmd_text.cursize);
+			memcpy (text, text+i, cmd_text.cursize);
 		}
 
 // execute the command line

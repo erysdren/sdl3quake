@@ -1356,7 +1356,7 @@ void * Mod_LoadAliasSkin (void * pin, int *pskinindex, int skinsize,
 	pinskin = (byte *)pin;
 	*pskinindex = (byte *)pskin - (byte *)pheader;
 
-	Q_memcpy (pskin, pinskin, skinsize);
+	memcpy (pskin, pinskin, skinsize);
 
 	pinskin += skinsize;
 
@@ -1668,7 +1668,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 	pspriteframe = Hunk_AllocName (sizeof (mspriteframe_t) + size,
 								   loadname);
 
-	Q_memset (pspriteframe, 0, sizeof (mspriteframe_t) + size);
+	memset (pspriteframe, 0, sizeof (mspriteframe_t) + size);
 	*ppframe = pspriteframe;
 
 	pspriteframe->width = width;
@@ -1681,7 +1681,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 	pspriteframe->left = origin[0];
 	pspriteframe->right = width + origin[0];
 
-	Q_memcpy (&pspriteframe->pixels[0], (byte *)(pinframe + 1), size);
+	memcpy (&pspriteframe->pixels[0], (byte *)(pinframe + 1), size);
 
 	return (void *)((byte *)pinframe + sizeof (dspriteframe_t) + size);
 }
