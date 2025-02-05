@@ -25,7 +25,6 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 #define MAXLEFTCLIPEDGES		100
 
-// !!! if these are changed, they must be changed in asm_draw.h too !!!
 #define FULLY_CLIPPED_CACHED	0x80000000
 #define FRAMECOUNT_MASK			0x7FFFFFFF
 

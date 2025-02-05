@@ -25,11 +25,9 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include "d_local.h"
 
 // TODO: put in span spilling to shrink list size
-// !!! if this is changed, it must be changed in d_polysa.s too !!!
 #define DPS_MAXSPANS			MAXHEIGHT+1	
 									// 1 extra for spanpackage that marks end
 
-// !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct {
 	void			*pdest;
 	int16_t			*pz;

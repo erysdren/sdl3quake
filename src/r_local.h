@@ -82,7 +82,6 @@ extern cvar_t	r_numedges;
 
 #define	DIST_NOT_SET	98765
 
-// !!! if this is changed, it must be changed in asm_draw.h too !!!
 typedef struct clipplane_s
 {
 	vec3_t		normal;
@@ -171,7 +170,6 @@ extern	model_t		*cl_worldmodel;
 
 extern int		*pfrustum_indexes[4];
 
-// !!! if this is changed, it must be changed in asm_draw.h too !!!
 #define	NEAR_CLIP	0.01
 
 extern int			ubasestep, errorterm, erroradjustup, erroradjustdown;
