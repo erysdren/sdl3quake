@@ -1186,14 +1186,14 @@ typedef struct pack_s
 typedef struct
 {
 	char    name[56];
-	int             filepos, filelen;
+	int32_t             filepos, filelen;
 } dpackfile_t;
 
 typedef struct
 {
 	char    id[4];
-	int             dirofs;
-	int             dirlen;
+	int32_t             dirofs;
+	int32_t             dirlen;
 } dpackheader_t;
 
 #define MAX_FILES_IN_PACK       2048
