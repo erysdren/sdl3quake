@@ -16,7 +16,7 @@ target_compile_definitions(libsdl3quake PUBLIC GAMEEXEC=\"${SDL3QUAKE_GAMEEXEC}\
 target_compile_definitions(libsdl3quake PUBLIC GAMEVERSION=${SDL3QUAKE_GAMEVERSION})
 set_target_properties(libsdl3quake PROPERTIES OUTPUT_NAME "sdl3quake" C_STANDARD_REQUIRED ON C_STANDARD 23)
 target_sources(libsdl3quake PRIVATE
-	${PROJECT_SOURCE_DIR}/src/cd_null.c
+	${PROJECT_SOURCE_DIR}/src/cdaudio.c
 	${PROJECT_SOURCE_DIR}/src/chase.c
 	${PROJECT_SOURCE_DIR}/src/cl_demo.c
 	${PROJECT_SOURCE_DIR}/src/cl_input.c
@@ -43,7 +43,7 @@ target_sources(libsdl3quake PRIVATE
 	${PROJECT_SOURCE_DIR}/src/draw.c
 	${PROJECT_SOURCE_DIR}/src/host_cmd.c
 	${PROJECT_SOURCE_DIR}/src/host.c
-	${PROJECT_SOURCE_DIR}/src/in_null.c
+	${PROJECT_SOURCE_DIR}/src/input.c
 	${PROJECT_SOURCE_DIR}/src/keys.c
 	${PROJECT_SOURCE_DIR}/src/mathlib.c
 	${PROJECT_SOURCE_DIR}/src/menu.c
@@ -70,13 +70,13 @@ target_sources(libsdl3quake PRIVATE
 	${PROJECT_SOURCE_DIR}/src/r_vars.c
 	${PROJECT_SOURCE_DIR}/src/sbar.c
 	${PROJECT_SOURCE_DIR}/src/screen.c
-	${PROJECT_SOURCE_DIR}/src/snd_null.c
+	${PROJECT_SOURCE_DIR}/src/sound.c
 	${PROJECT_SOURCE_DIR}/src/sv_main.c
 	${PROJECT_SOURCE_DIR}/src/sv_move.c
 	${PROJECT_SOURCE_DIR}/src/sv_phys.c
 	${PROJECT_SOURCE_DIR}/src/sv_user.c
-	${PROJECT_SOURCE_DIR}/src/sys_null.c
-	${PROJECT_SOURCE_DIR}/src/vid_null.c
+	${PROJECT_SOURCE_DIR}/src/sys.c
+	${PROJECT_SOURCE_DIR}/src/vid.c
 	${PROJECT_SOURCE_DIR}/src/view.c
 	${PROJECT_SOURCE_DIR}/src/wad.c
 	${PROJECT_SOURCE_DIR}/src/world.c
