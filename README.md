@@ -17,6 +17,12 @@ cmake -Bcmake-build -DCMAKE_BUILD_TYPE=Release .
 cmake --build cmake-build --target sdl3quake
 ```
 
+## Credits
+
+- [quakegeneric](https://github.com/erysdren/quakegeneric)
+- [qrustyquake](https://github.com/cyanbun96/qrustyquake)
+- special thanks to @bruxisma for CMakeLists.txt wrangling
+
 ## Command Line Arguments
 
 | Name             | Arguments                             | Description                                                   |
@@ -37,12 +43,6 @@ cmake --build cmake-build --target sdl3quake
 | `-game`          | \[game directory\]                    | load additional game data from specified directory            |
 | `-path`          | \[directory or pak file\] \[...\]     | add specified directories or pak files to engine hierarchy    |
 | `-basedir`       | \[base directory\]                    | overrides engine base directory                               |
-
-## Credits
-
-- [quakegeneric](https://github.com/erysdren/quakegeneric)
-- [qrustyquake](https://github.com/cyanbun96/qrustyquake)
-- special thanks to @bruxisma for CMakeLists.txt wrangling
 
 ## License
 
