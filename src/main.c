@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see https://www.gnu.org/licenses/
 */
 
+#include "quakedef.h"
 #include "libsdl3quake.h"
 
 #include <assert.h>
@@ -40,6 +41,28 @@ static int keybuffer_start;  // index of next item to be read
 static int mouse_x, mouse_y;
 static float joy_axes[QUAKEGENERIC_JOY_MAX_AXES];
 static SDL_Joystick *joystick;
+
+void QG_Tick(double duration)
+{
+	Host_Frame(duration);
+}
+
+void QG_Create(int argc, char *argv[])
+{
+	static quakeparms_t    parms;
+
+	parms.memsize = 8*1024*1024;
+	parms.membase = malloc (parms.memsize);
+	parms.basedir = ".";
+
+	COM_InitArgv (argc, argv);
+
+	parms.argc = com_argc;
+	parms.argv = com_argv;
+
+	printf ("Host_Init\n");
+	Host_Init (&parms);
+}
 
 void QG_Init(void)
 {
