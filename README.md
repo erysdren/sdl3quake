@@ -42,6 +42,7 @@ cmake --build cmake-build --target sdl3quake
 
 - [quakegeneric](https://github.com/erysdren/quakegeneric)
 - [qrustyquake](https://github.com/cyanbun96/qrustyquake)
+- special thanks to @bruxisma for CMakeLists.txt wrangling
 
 ## License
 
