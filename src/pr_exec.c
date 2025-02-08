@@ -152,8 +152,10 @@ const char *PR_GetString(int s)
 	{
 		s = abs(s);
 
-		if (s >= MAX_TEMPSTRINGS)
-			Sys_Error("tempstring %s is out of range", s);
+		if (s >= MAX_TEMPSTRINGS && s < MAX_TEMPSTRINGS + MAX_STATICSTRINGS)
+			return &pr_staticstrings[s];
+		else
+			Sys_Error("string %s is out of range", s);
 
 		return &pr_tempstrings[s];
 	}
@@ -176,9 +178,7 @@ int PR_MakeTempString(const char *s)
 	int slen = (int)strlen(s);
 
 	if (pr_tempstrings_size + slen >= MAX_TEMPSTRINGS)
-	{
 		pr_tempstrings_size = 1;
-	}
 
 	memcpy(pr_tempstrings + pr_tempstrings_size, s, slen + 1);
 
@@ -187,6 +187,27 @@ int PR_MakeTempString(const char *s)
 	pr_tempstrings_size += slen + 1;
 
 	return ofs;
+}
+
+/*
+=================
+PR_MakeStaticString
+=================
+*/
+int PR_MakeStaticString(const char *s)
+{
+	int slen = (int)strlen(s);
+
+	if (pr_staticstrings_size + slen >= MAX_STATICSTRINGS)
+		Sys_Error("ran out of staticstrings space");
+
+	memcpy(pr_staticstrings + pr_staticstrings_size, s, slen + 1);
+
+	int ofs = -pr_staticstrings_size;
+
+	pr_staticstrings_size += slen + 1;
+
+	return ofs - MAX_TEMPSTRINGS;
 }
 
 /*

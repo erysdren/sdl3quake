@@ -50,12 +50,15 @@ typedef struct edict_s
 //============================================================================
 
 #define MAX_TEMPSTRINGS 0x2000
+#define MAX_STATICSTRINGS 0x2000
 
 extern	dprograms_t		*progs;
 extern	dfunction_t		*pr_functions;
 extern	char			*pr_strings;
 extern	char			*pr_tempstrings;
 extern	int				pr_tempstrings_size;
+extern	char			*pr_staticstrings;
+extern	int				pr_staticstrings_size;
 extern	ddef_t			*pr_globaldefs;
 extern	ddef_t			*pr_fielddefs;
 extern	dstatement_t	*pr_statements;
@@ -136,4 +139,5 @@ void ED_PrintNum (int ent);
 eval_t *GetEdictFieldValue(edict_t *ed, char *field);
 
 int PR_MakeTempString(const char *s);
+int PR_MakeStaticString(const char *s);
 const char *PR_GetString(int s);

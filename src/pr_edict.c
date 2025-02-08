@@ -26,6 +26,8 @@ dfunction_t		*pr_functions;
 char			*pr_strings;
 char			*pr_tempstrings;
 int				pr_tempstrings_size;
+char			*pr_staticstrings;
+int				pr_staticstrings_size;
 ddef_t			*pr_fielddefs;
 ddef_t			*pr_globaldefs;
 dstatement_t	*pr_statements;
@@ -741,7 +743,7 @@ qboolean	ED_ParseEpair (void *base, ddef_t *key, char *s)
 	switch (key->type & ~DEF_SAVEGLOBAL)
 	{
 	case ev_string:
-		*(string_t *)d = ED_NewString (s) - pr_strings;
+		*(string_t *)d = PR_MakeStaticString(ED_NewString(s));
 		break;
 		
 	case ev_float:
@@ -1015,6 +1017,8 @@ void PR_LoadProgs (void)
 	pr_strings = (char *)progs + progs->ofs_strings;
 	pr_tempstrings = (char *)Hunk_AllocName(MAX_TEMPSTRINGS, "tempstrings");
 	pr_tempstrings_size = 1;
+	pr_staticstrings = (char *)Hunk_AllocName(MAX_STATICSTRINGS, "staticstrings");
+	pr_staticstrings_size = 1;
 	pr_globaldefs = (ddef_t *)((byte *)progs + progs->ofs_globaldefs);
 	pr_fielddefs = (ddef_t *)((byte *)progs + progs->ofs_fielddefs);
 	pr_statements = (dstatement_t *)((byte *)progs + progs->ofs_statements);
