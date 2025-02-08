@@ -87,7 +87,7 @@ void Cbuf_AddText (char *text)
 {
 	int		l;
 	
-	l = Q_strlen (text);
+	l = strlen (text);
 
 	if (cmd_text.cursize + l >= cmd_text.maxsize)
 	{
@@ -95,7 +95,7 @@ void Cbuf_AddText (char *text)
 		return;
 	}
 
-	SZ_Write (&cmd_text, text, Q_strlen (text));
+	SZ_Write (&cmd_text, text, strlen (text));
 }
 
 
@@ -228,7 +228,7 @@ void Cmd_StuffCmds_f (void)
 	{
 		if (!com_argv[i])
 			continue;		// NEXTSTEP nulls out -NXHost
-		s += Q_strlen (com_argv[i]) + 1;
+		s += strlen (com_argv[i]) + 1;
 	}
 	if (!s)
 		return;
@@ -515,7 +515,7 @@ void Cmd_TokenizeString (char *text)
 
 		if (cmd_argc < MAX_ARGS)
 		{
-			cmd_argv[cmd_argc] = Z_Malloc (Q_strlen(com_token)+1);
+			cmd_argv[cmd_argc] = Z_Malloc (strlen(com_token)+1);
 			strcpy (cmd_argv[cmd_argc], com_token);
 			cmd_argc++;
 		}
@@ -590,7 +590,7 @@ char *Cmd_CompleteCommand (char *partial)
 	cmd_function_t	*cmd;
 	int				len;
 	
-	len = Q_strlen(partial);
+	len = strlen(partial);
 	
 	if (!len)
 		return NULL;

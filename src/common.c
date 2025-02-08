@@ -133,20 +133,9 @@ void InsertLinkAfter (link_t *l, link_t *after)
 ============================================================================
 */
 
-int Q_strlen (char *str)
-{
-	int             count;
-	
-	count = 0;
-	while (str[count])
-		count++;
-
-	return count;
-}
-
 char *Q_strrchr(char *s, char c)
 {
-    int len = Q_strlen(s);
+    int len = strlen(s);
     s += len;
     while (len--)
 	if (*--s == c) return s;
@@ -155,7 +144,7 @@ char *Q_strrchr(char *s, char c)
 
 void Q_strcat (char *dest, char *src)
 {
-	dest += Q_strlen(dest);
+	dest += strlen(dest);
 	strcpy (dest, src);
 }
 
@@ -515,7 +504,7 @@ void MSG_WriteString (sizebuf_t *sb, char *s)
 	if (!s)
 		SZ_Write (sb, "", 1);
 	else
-		SZ_Write (sb, s, Q_strlen(s)+1);
+		SZ_Write (sb, s, strlen(s)+1);
 }
 
 void MSG_WriteCoord (sizebuf_t *sb, float f)
@@ -720,7 +709,7 @@ void SZ_Print (sizebuf_t *buf, char *data)
 {
 	int             len;
 	
-	len = Q_strlen(data)+1;
+	len = strlen(data)+1;
 
 // byte * cast to keep VC++ happy
 	if (buf->data[buf->cursize-1])
