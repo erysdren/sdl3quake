@@ -52,7 +52,7 @@ float	Cvar_VariableValue (char *var_name)
 	var = Cvar_FindVar (var_name);
 	if (!var)
 		return 0;
-	return Q_atof (var->string);
+	return atof (var->string);
 }
 
 
@@ -119,7 +119,7 @@ void Cvar_Set (char *var_name, char *value)
 	
 	var->string = Z_Malloc (strlen(value)+1);
 	strcpy (var->string, value);
-	var->value = Q_atof (var->string);
+	var->value = atof (var->string);
 	if (var->server && changed)
 	{
 		if (sv.active)
@@ -170,7 +170,7 @@ void Cvar_RegisterVariable (cvar_t *variable)
 	oldstr = variable->string;
 	variable->string = Z_Malloc (strlen(variable->string)+1);	
 	strcpy (variable->string, oldstr);
-	variable->value = Q_atof (variable->string);
+	variable->value = atof (variable->string);
 	
 // link the variable in
 	variable->next = cvar_vars;

@@ -1145,7 +1145,7 @@ void Host_Kick_f (void)
 
 	if (Cmd_Argc() > 2 && strcmp(Cmd_Argv(1), "#") == 0)
 	{
-		i = Q_atof(Cmd_Argv(2)) - 1;
+		i = atof(Cmd_Argv(2)) - 1;
 		if (i < 0 || i >= svs.maxclients)
 			return;
 		if (!svs.clients[i].active)
