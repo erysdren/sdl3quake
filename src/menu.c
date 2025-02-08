@@ -2290,7 +2290,7 @@ void M_LanConfig_Key (int key)
 		else
 			lanConfig_cursor = 0;
 
-	l =  Q_atoi(lanConfig_portname);
+	l =  atoi(lanConfig_portname);
 	if (l > 65535)
 		l = lanConfig_port;
 	else

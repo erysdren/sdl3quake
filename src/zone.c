@@ -925,7 +925,7 @@ void Memory_Init (void *buf, int size)
 	if (p)
 	{
 		if (p < com_argc-1)
-			zonesize = Q_atoi (com_argv[p+1]) * 1024;
+			zonesize = atoi (com_argv[p+1]) * 1024;
 		else
 			Sys_Error ("Memory_Init: you must specify a size in KB after -zone");
 	}

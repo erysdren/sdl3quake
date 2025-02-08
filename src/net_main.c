@@ -172,7 +172,7 @@ static void NET_Listen_f (void)
 		return;
 	}
 
-	listening = Q_atoi(Cmd_Argv(1)) ? true : false;
+	listening = atoi(Cmd_Argv(1)) ? true : false;
 
 	for (net_driverlevel=0 ; net_driverlevel<net_numdrivers; net_driverlevel++)
 	{
@@ -199,7 +199,7 @@ static void MaxPlayers_f (void)
 		return;
 	}
 
-	n = Q_atoi(Cmd_Argv(1));
+	n = atoi(Cmd_Argv(1));
 	if (n < 1)
 		n = 1;
 	if (n > svs.maxclientslimit)
@@ -232,7 +232,7 @@ static void NET_Port_f (void)
 		return;
 	}
 
-	n = Q_atoi(Cmd_Argv(1));
+	n = atoi(Cmd_Argv(1));
 	if (n < 1 || n > 65534)
 	{
 		Con_Printf ("Bad value, must be between 1 and 65534\n");
@@ -717,7 +717,7 @@ void NET_Init (void)
 	if (i)
 	{
 		if (i < com_argc-1)
-			DEFAULTnet_hostport = Q_atoi (com_argv[i+1]);
+			DEFAULTnet_hostport = atoi (com_argv[i+1]);
 		else
 			Sys_Error ("NET_Init: you must specify a number after -port");
 	}
