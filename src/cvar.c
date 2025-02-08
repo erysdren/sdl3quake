@@ -89,7 +89,7 @@ char *Cvar_CompleteVariable (char *partial)
 		
 // check functions
 	for (cvar=cvar_vars ; cvar ; cvar=cvar->next)
-		if (!Q_strncmp (partial,cvar->name, len))
+		if (!strncmp (partial,cvar->name, len))
 			return cvar->name;
 
 	return NULL;

@@ -133,23 +133,6 @@ void InsertLinkAfter (link_t *l, link_t *after)
 ============================================================================
 */
 
-int Q_strncmp (char *s1, char *s2, int count)
-{
-	while (1)
-	{
-		if (!count--)
-			return 0;
-		if (*s1 != *s2)
-			return -1;              // strings not equal    
-		if (!*s1)
-			return 0;               // strings are equal
-		s1++;
-		s2++;
-	}
-	
-	return -1;
-}
-
 int Q_strncasecmp (char *s1, char *s2, int n)
 {
 	int             c1, c2;
