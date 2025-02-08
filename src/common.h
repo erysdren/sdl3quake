@@ -116,7 +116,6 @@ float MSG_ReadAngle (void);
 
 //============================================================================
 
-void Q_strcpy (char *dest, char *src);
 void Q_strncpy (char *dest, char *src, int count);
 int Q_strlen (char *str);
 char *Q_strrchr (char *s, char c);

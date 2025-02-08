@@ -516,7 +516,7 @@ void Cmd_TokenizeString (char *text)
 		if (cmd_argc < MAX_ARGS)
 		{
 			cmd_argv[cmd_argc] = Z_Malloc (Q_strlen(com_token)+1);
-			Q_strcpy (cmd_argv[cmd_argc], com_token);
+			strcpy (cmd_argv[cmd_argc], com_token);
 			cmd_argc++;
 		}
 	}

@@ -690,7 +690,7 @@ void Host_Name_f (void)
 	if (host_client->name[0] && strcmp(host_client->name, "unconnected") )
 		if (Q_strcmp(host_client->name, newName) != 0)
 			Con_Printf ("%s renamed to %s\n", host_client->name, newName);
-	Q_strcpy (host_client->name, newName);
+	strcpy (host_client->name, newName);
 	host_client->edict->v.netname = host_client->name - pr_strings;
 	
 // send notification to all clients
@@ -799,7 +799,7 @@ void Host_Tell_f(void)
 	if (Cmd_Argc () < 3)
 		return;
 
-	Q_strcpy(text, host_client->name);
+	strcpy(text, host_client->name);
 	Q_strcat(text, ": ");
 
 	p = Cmd_Args();

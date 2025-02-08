@@ -133,15 +133,6 @@ void InsertLinkAfter (link_t *l, link_t *after)
 ============================================================================
 */
 
-void Q_strcpy (char *dest, char *src)
-{
-	while (*src)
-	{
-		*dest++ = *src++;
-	}
-	*dest++ = 0;
-}
-
 void Q_strncpy (char *dest, char *src, int count)
 {
 	while (*src && count--)
@@ -175,7 +166,7 @@ char *Q_strrchr(char *s, char c)
 void Q_strcat (char *dest, char *src)
 {
 	dest += Q_strlen(dest);
-	Q_strcpy (dest, src);
+	strcpy (dest, src);
 }
 
 int Q_strcmp (char *s1, char *s2)

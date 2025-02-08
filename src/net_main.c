@@ -119,7 +119,7 @@ qsocket_t *NET_NewQSocket (void)
 
 	sock->disconnected = false;
 	sock->connecttime = net_time;
-	Q_strcpy (sock->address,"UNSET ADDRESS");
+	strcpy (sock->address,"UNSET ADDRESS");
 	sock->driver = net_driverlevel;
 	sock->socket = 0;
 	sock->driverdata = NULL;
