@@ -800,7 +800,7 @@ void Host_Tell_f(void)
 		return;
 
 	strcpy(text, host_client->name);
-	Q_strcat(text, ": ");
+	strcat(text, ": ");
 
 	p = Cmd_Args();
 
