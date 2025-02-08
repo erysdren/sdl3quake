@@ -135,5 +135,5 @@ void ED_PrintNum (int ent);
 
 eval_t *GetEdictFieldValue(edict_t *ed, char *field);
 
-int PR_ReturnString(const char *s);
+int PR_MakeTempString(const char *s);
 const char *PR_GetString(int s);

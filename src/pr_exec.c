@@ -168,10 +168,10 @@ const char *PR_GetString(int s)
 
 /*
 =================
-PR_ReturnString
+PR_MakeTempString
 =================
 */
-int PR_ReturnString(const char *s)
+int PR_MakeTempString(const char *s)
 {
 	int slen = (int)strlen(s);
 

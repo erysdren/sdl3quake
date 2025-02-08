@@ -897,7 +897,7 @@ void PF_ftos (void)
 		sprintf (str, "%d",(int)v);
 	else
 		sprintf (str, "%5.1f",v);
-	G_INT(OFS_RETURN) = PR_ReturnString(str);
+	G_INT(OFS_RETURN) = PR_MakeTempString(str);
 }
 
 void PF_fabs (void)
@@ -911,7 +911,7 @@ void PF_vtos (void)
 {
 	char	str[128];
 	sprintf (str, "'%5.1f %5.1f %5.1f'", G_VECTOR(OFS_PARM0)[0], G_VECTOR(OFS_PARM0)[1], G_VECTOR(OFS_PARM0)[2]);
-	G_INT(OFS_RETURN) = PR_ReturnString(str);
+	G_INT(OFS_RETURN) = PR_MakeTempString(str);
 }
 
 void PF_Spawn (void)
