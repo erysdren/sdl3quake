@@ -5,8 +5,8 @@ project(sdl3quake LANGUAGES C VERSION 0.1.0)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 find_package(Math)
 
-# get SDL
-find_package(SDL2 REQUIRED)
+# get SDL3
+find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
 
 # build-time options
 set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
@@ -22,7 +22,7 @@ add_executable(sdl3quake ${SDL3QUAKE_SOURCES})
 
 # link stuff
 target_link_libraries(sdl3quake PUBLIC
-	SDL2::SDL2
+	SDL3::SDL3
 	$<TARGET_NAME_IF_EXISTS:Math::Math>
 )
 

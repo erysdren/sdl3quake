@@ -21,8 +21,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include "libsdl3quake.h"
 
 #include <assert.h>
-#define SDL_MAIN_HANDLED 1
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <stdint.h>
 
 SDL_Window *window;
@@ -66,26 +65,31 @@ void QG_Create(int argc, char *argv[])
 
 void QG_Init(void)
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	window = SDL_CreateWindow(GAMETITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
+	SDL_Init(SDL_INIT_VIDEO);
+	window = SDL_CreateWindow(GAMETITLE, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
 	SDL_SetWindowMinimumSize(window, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
-	SDL_RenderSetLogicalSize(renderer, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+	renderer = SDL_CreateRenderer(window, NULL);
+	SDL_SetRenderLogicalPresentation(renderer, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+	SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
 	rgbpixels = malloc(QUAKEGENERIC_RES_X * QUAKEGENERIC_RES_Y * sizeof(uint32_t));
 
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_SetWindowRelativeMouseMode(window, true);
 
 	keybuffer_len = 0;
 	keybuffer_start = 0;
 	mouse_x = mouse_y = 0;
 	memset(joy_axes, 0, sizeof(joy_axes));
 
-    if (SDL_NumJoysticks() != 0) {
-		joystick = SDL_JoystickOpen(0);
-	} else {
+	int num_joysticks = 0;
+	SDL_JoystickID *joysticks = SDL_GetJoysticks(&num_joysticks);
+
+    if (joysticks)
+		joystick = SDL_OpenJoystick(0);
+	else
 		joystick = NULL;
-	}
+
+	SDL_free(joysticks);
 }
 
 static int ConvertToQuakeButton(unsigned char button)
@@ -213,7 +217,7 @@ static int ConvertToQuakeKey(unsigned int key)
 			qkey = K_PAUSE;
 			break;
 		default:
-			qkey = tolower(key);
+			qkey = SDL_tolower(key);
 			break;
 
 		/*
@@ -279,7 +283,7 @@ void QG_Quit(void)
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (texture) SDL_DestroyTexture(texture);
 	if (rgbpixels) free(rgbpixels);
-	if (joystick != NULL) SDL_JoystickClose(joystick);
+	if (joystick != NULL) SDL_CloseJoystick(joystick);
 	SDL_Quit();
 }
 
@@ -296,7 +300,7 @@ void QG_DrawFrame(void *pixels)
 	// blit
 	SDL_UpdateTexture(texture, NULL, rgbpixels, QUAKEGENERIC_RES_X * sizeof(uint32_t));
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderTexture(renderer, texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 
@@ -322,25 +326,25 @@ int main(int argc, char *argv[])
 		{
 			switch (event.type)
 			{
-				case SDL_QUIT:
+				case SDL_EVENT_QUIT:
 					running = 0;
 					break;
-				case SDL_KEYDOWN:
-				case SDL_KEYUP:
-					(void) KeyPush((event.type == SDL_KEYDOWN), ConvertToQuakeKey(event.key.keysym.sym));
+				case SDL_EVENT_KEY_DOWN:
+				case SDL_EVENT_KEY_UP:
+					(void) KeyPush((event.type == SDL_EVENT_KEY_DOWN), ConvertToQuakeKey(event.key.key));
 					break;
-				case SDL_MOUSEMOTION:
+				case SDL_EVENT_MOUSE_MOTION:
 					mouse_x += event.motion.xrel;
 					mouse_y += event.motion.yrel;
 					break;
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
+				case SDL_EVENT_MOUSE_BUTTON_DOWN:
+				case SDL_EVENT_MOUSE_BUTTON_UP:
 					button = ConvertToQuakeButton(event.button.button);
 					if (button != -1) {
-						(void) KeyPush((event.type == SDL_MOUSEBUTTONDOWN), button);
+						(void) KeyPush((event.type == SDL_EVENT_MOUSE_BUTTON_DOWN), button);
 					}
 					break;
-				case SDL_MOUSEWHEEL:
+				case SDL_EVENT_MOUSE_WHEEL:
 					if (event.wheel.y > 0)
 					{
 						(void) KeyPush(1, K_MWHEELUP);
@@ -352,16 +356,16 @@ int main(int argc, char *argv[])
 						(void) KeyPush(0, K_MWHEELDOWN);
 					}
 					break;
-				case SDL_JOYAXISMOTION:
+				case SDL_EVENT_JOYSTICK_AXIS_MOTION:
 					if (event.jaxis.axis < QUAKEGENERIC_JOY_MAX_AXES) {
 						joy_axes[event.jaxis.axis] = event.jaxis.value / 32767.0f;
 					}
 					break;
 
-				case SDL_JOYBUTTONDOWN:
-				case SDL_JOYBUTTONUP:
+				case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
+				case SDL_EVENT_JOYSTICK_BUTTON_UP:
 					button = event.jbutton.button + ((event.jbutton.button < 4) ? K_JOY1 : K_AUX1);
-					(void) KeyPush((event.type == SDL_JOYBUTTONDOWN), button);
+					(void) KeyPush((event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN), button);
 					break;
 			}
 		}
