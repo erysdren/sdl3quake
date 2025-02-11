@@ -13,6 +13,7 @@ set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
 set(SDL3QUAKE_GAMETITLE "Quake" CACHE STRING "Displayed game title")
 set(SDL3QUAKE_GAMEEXEC "quake.rc" CACHE STRING "Default script to execute at engine start (relative to base game directory)")
 set(SDL3QUAKE_GAMEVERSION "1.09" CACHE STRING "Displayed game version (must be numeric)")
+option(SDL3QUAKE_FORCE_32BIT "Force 32-bit build" ON)
 
 # grab all sources
 file(GLOB SDL3QUAKE_SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/src/*.c")
@@ -36,3 +37,11 @@ target_compile_definitions(sdl3quake PUBLIC
 
 # require C23
 set_target_properties(sdl3quake PROPERTIES C_STANDARD_REQUIRED ON C_STANDARD 23)
+
+# 32-bit builds for now
+if(${SDL3QUAKE_FORCE_32BIT})
+	if(NOT MSVC AND UNIX)
+		set(CMAKE_LIBRARY_PATH "/usr/lib32" CACHE PATH "32-bit library path")
+		set_target_properties(sdl3quake PROPERTIES COMPILE_OPTIONS "-m32" LINK_OPTIONS "-m32")
+	endif()
+endif()
