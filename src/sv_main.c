@@ -887,7 +887,7 @@ SV_ModelIndex
 
 ================
 */
-int SV_ModelIndex (char *name)
+int SV_ModelIndex (const char *name)
 {
 	int		i;
 	
@@ -1115,9 +1115,9 @@ void SV_SpawnServer (char *server)
 //
 	SV_ClearWorld ();
 
-	sv.sound_precache[0] = PR_GetString(0);
+	sv.sound_precache[0] = (char *)PR_GetString(0);
 
-	sv.model_precache[0] = PR_GetString(0);
+	sv.model_precache[0] = (char *)PR_GetString(0);
 	sv.model_precache[1] = sv.modelname;
 	for (i=1 ; i<sv.worldmodel->numsubmodels ; i++)
 	{

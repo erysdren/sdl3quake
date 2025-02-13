@@ -275,12 +275,12 @@ void MSG_WriteFloat (sizebuf_t *sb, float f)
 	SZ_Write (sb, &dat.l, 4);
 }
 
-void MSG_WriteString (sizebuf_t *sb, char *s)
+void MSG_WriteString (sizebuf_t *sb, const char *s)
 {
 	if (!s)
 		SZ_Write (sb, "", 1);
 	else
-		SZ_Write (sb, s, strlen(s)+1);
+		SZ_Write (sb, (void *)s, strlen(s)+1);
 }
 
 void MSG_WriteCoord (sizebuf_t *sb, float f)

@@ -1444,7 +1444,7 @@ void PF_WriteEntity (void)
 
 //=============================================================================
 
-int SV_ModelIndex (char *name);
+int SV_ModelIndex (const char *name);
 
 void PF_makestatic (void)
 {

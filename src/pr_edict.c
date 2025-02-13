@@ -227,7 +227,7 @@ ddef_t *ED_FindGlobal (char *name)
 ED_FindFunction
 ============
 */
-dfunction_t *ED_FindFunction (char *name)
+dfunction_t *ED_FindFunction (const char *name)
 {
 	dfunction_t		*func;
 	int				i;
@@ -455,7 +455,7 @@ void ED_Print (edict_t *ed)
 	for (i=1 ; i<progs->numfielddefs ; i++)
 	{
 		d = &pr_fielddefs[i];
-		name = PR_GetString(d->s_name);
+		name = (char *)PR_GetString(d->s_name);
 		if (name[strlen(name)-2] == '_')
 			continue;	// skip _x, _y, _z vars
 			
@@ -505,7 +505,7 @@ void ED_Write (FILE *f, edict_t *ed)
 	for (i=1 ; i<progs->numfielddefs ; i++)
 	{
 		d = &pr_fielddefs[i];
-		name = PR_GetString(d->s_name);
+		name = (char *)PR_GetString(d->s_name);
 		if (name[strlen(name)-2] == '_')
 			continue;	// skip _x, _y, _z vars
 			
@@ -638,7 +638,7 @@ void ED_WriteGlobals (FILE *f)
 		&& type != ev_entity)
 			continue;
 
-		name = PR_GetString(def->s_name);
+		name = (char *)PR_GetString(def->s_name);
 		fprintf (f,"\"%s\" ", name);
 		fprintf (f,"\"%s\"\n", PR_UglyValueString(type, (eval_t *)&pr_globals[def->ofs]));		
 	}
