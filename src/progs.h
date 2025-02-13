@@ -49,9 +49,16 @@ typedef struct edict_s
 
 //============================================================================
 
+#define MAX_TEMPSTRINGS 0x2000
+#define MAX_STATICSTRINGS 0x2000
+
 extern	dprograms_t		*progs;
 extern	dfunction_t		*pr_functions;
 extern	char			*pr_strings;
+extern	char			*pr_tempstrings;
+extern	int				pr_tempstrings_size;
+extern	char			*pr_staticstrings;
+extern	int				pr_staticstrings_size;
 extern	ddef_t			*pr_globaldefs;
 extern	ddef_t			*pr_fielddefs;
 extern	dstatement_t	*pr_statements;
@@ -102,13 +109,13 @@ int NUM_FOR_EDICT(edict_t *e);
 #define	G_EDICT(o) ((edict_t *)((byte *)sv.edicts+ *(int *)&pr_globals[o]))
 #define G_EDICTNUM(o) NUM_FOR_EDICT(G_EDICT(o))
 #define	G_VECTOR(o) (&pr_globals[o])
-#define	G_STRING(o) (pr_strings + *(string_t *)&pr_globals[o])
+#define	G_STRING(o) (PR_GetString(*(string_t *)&pr_globals[o]))
 #define	G_FUNCTION(o) (*(func_t *)&pr_globals[o])
 
 #define	E_FLOAT(e,o) (((float*)&e->v)[o])
 #define	E_INT(e,o) (*(int *)&((float*)&e->v)[o])
 #define	E_VECTOR(e,o) (&((float*)&e->v)[o])
-#define	E_STRING(e,o) (pr_strings + *(string_t *)&((float*)&e->v)[o])
+#define	E_STRING(e,o) (PR_GetString(*(string_t *)&((float*)&e->v)[o]))
 
 extern	int		type_size[8];
 
@@ -131,3 +138,6 @@ void ED_PrintNum (int ent);
 
 eval_t *GetEdictFieldValue(edict_t *ed, char *field);
 
+int PR_MakeTempString(const char *s);
+int PR_MakeStaticString(const char *s);
+const char *PR_GetString(int s);
