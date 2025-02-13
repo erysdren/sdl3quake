@@ -20,8 +20,6 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #ifndef __QUAKEGENERIC__
 #define __QUAKEGENERIC__
 
-#include "quakekeys.h"
-
 #define QUAKEGENERIC_RES_X 320
 #define QUAKEGENERIC_RES_Y 240
 
