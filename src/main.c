@@ -370,6 +370,12 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		// HACKHACK: disable mouselook while in menu
+		if (key_dest == key_menu)
+			SDL_SetWindowRelativeMouseMode(window, false);
+		else
+			SDL_SetWindowRelativeMouseMode(window, true);
+
 		// Run the frame at the correct duration.
 		newtime = (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency();
 		QG_Tick(newtime - oldtime);
