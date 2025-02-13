@@ -4,7 +4,6 @@ modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
 ## Notes
 
-- lacks 64-bit stability
 - lacks audio
 - lacks netplay
 - lacks all extended Quake engine features from the past 29 years
