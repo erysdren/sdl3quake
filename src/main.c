@@ -24,13 +24,12 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include <SDL3/SDL.h>
 #include <stdint.h>
 
-SDL_Window *window;
-SDL_Renderer *renderer;
-SDL_Texture *texture;
-uint32_t *rgbpixels;
-unsigned char pal[768];
-
-#define ARGB(r, g, b, a) (((a) << 24) | ((r) << 16) | ((g) << 8) | (b))
+static SDL_Window *window = NULL;
+static SDL_Renderer *renderer = NULL;
+static SDL_Texture *texture = NULL;
+static SDL_Surface *surface8 = NULL;
+static SDL_Surface *surface24 = NULL;
+static SDL_Palette *palette = NULL;
 
 #define KEYBUFFERSIZE	32
 static int keybuffer[KEYBUFFERSIZE];  // circular key buffer
@@ -65,14 +64,30 @@ void QG_Create(int argc, char *argv[])
 
 void QG_Init(void)
 {
+	// init sdl
 	SDL_Init(SDL_INIT_VIDEO);
+
+	// create window
 	window = SDL_CreateWindow(GAMETITLE, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
 	SDL_SetWindowMinimumSize(window, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+
+	// create renderer
 	renderer = SDL_CreateRenderer(window, NULL);
 	SDL_SetRenderLogicalPresentation(renderer, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_LOGICAL_PRESENTATION_LETTERBOX);
-	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+
+	// get window pixel format
+	SDL_PixelFormat window_format = SDL_GetWindowPixelFormat(window);
+
+	// create texture
+	texture = SDL_CreateTexture(renderer, window_format, SDL_TEXTUREACCESS_STREAMING, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
 	SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
-	rgbpixels = malloc(QUAKEGENERIC_RES_X * QUAKEGENERIC_RES_Y * sizeof(uint32_t));
+
+	// create draw surface
+	surface8 = SDL_CreateSurfaceFrom(QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_PIXELFORMAT_INDEX8, NULL, QUAKEGENERIC_RES_X);
+	palette = SDL_CreateSurfacePalette(surface8);
+
+	// create screen surface
+	surface24 = SDL_CreateSurfaceFrom(QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, window_format, NULL, QUAKEGENERIC_RES_X * SDL_BYTESPERPIXEL(window_format));
 
 	SDL_SetWindowRelativeMouseMode(window, true);
 
@@ -282,31 +297,37 @@ void QG_Quit(void)
 	if (window) SDL_DestroyWindow(window);
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (texture) SDL_DestroyTexture(texture);
-	if (rgbpixels) free(rgbpixels);
+	if (surface8) SDL_DestroySurface(surface8);
+	if (surface24) SDL_DestroySurface(surface24);
 	if (joystick != NULL) SDL_CloseJoystick(joystick);
 	SDL_Quit();
 }
 
 void QG_DrawFrame(void *pixels)
 {
-	// convert pixels
-	for (int i = 0; i < QUAKEGENERIC_RES_X * QUAKEGENERIC_RES_Y; i++)
+	surface8->pixels = pixels;
+	surface8->pitch = QUAKEGENERIC_RES_X;
+
+	if (SDL_LockTexture(texture, NULL, &surface24->pixels, &surface24->pitch))
 	{
-		uint8_t pixel = ((uint8_t *)pixels)[i];
-		uint8_t *entry = &((uint8_t *)pal)[pixel * 3];
-		rgbpixels[i] = ARGB(*(entry), *(entry + 1), *(entry + 2), 255);
+		SDL_BlitSurface(surface8, NULL, surface24, NULL);
+		SDL_UnlockTexture(texture);
 	}
 
-	// blit
-	SDL_UpdateTexture(texture, NULL, rgbpixels, QUAKEGENERIC_RES_X * sizeof(uint32_t));
 	SDL_RenderClear(renderer);
 	SDL_RenderTexture(renderer, texture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 
-void QG_SetPalette(unsigned char palette[768])
+void QG_SetPalette(unsigned char pal[768])
 {
-	SDL_memcpy(pal, palette, 768);
+	for (int i = 0; i < 256; i++)
+	{
+		palette->colors[i].r = pal[i * 3 + 0];
+		palette->colors[i].g = pal[i * 3 + 1];
+		palette->colors[i].b = pal[i * 3 + 2];
+		palette->colors[i].a = 255;
+	}
 }
 
 int main(int argc, char *argv[])

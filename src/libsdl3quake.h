@@ -44,7 +44,7 @@ void QG_Create(int argc, char *argv[]);
 void QG_Init(void);
 void QG_Quit(void);
 void QG_DrawFrame(void *pixels);
-void QG_SetPalette(unsigned char palette[768]);
+void QG_SetPalette(unsigned char pal[768]);
 int QG_GetKey(int *down, int *key);
 void QG_GetMouseMove(int *x, int *y);
 void QG_GetJoyAxes(float *axes);
