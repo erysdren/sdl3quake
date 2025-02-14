@@ -43,12 +43,7 @@ target_compile_definitions(sdl3quake PUBLIC
 set_target_properties(sdl3quake PROPERTIES C_STANDARD_REQUIRED ON C_STANDARD 23)
 
 # address sanitizer
-if(${SDL3QUAKE_USE_ASAN})
-	if(MSVC)
-		target_compile_options(sdl3quake PRIVATE /fsanitize=address)
-		target_link_options(sdl3quake PRIVATE /fsanitize=address)
-	else()
-		target_compile_options(sdl3quake PRIVATE -fsanitize=address -fno-omit-frame-pointer)
-		target_link_options(sdl3quake PRIVATE -fsanitize=address)
-	endif()
-endif()
+add_library(ASAN::ASAN IMPORTED INTERFACE)
+target_compile_options(ASAN::ASAN INTERFACE -fsanitize=address $<$<NOT:$<COMPILE_LANG_AND_ID:C,MSVC>>:-fno-omit-frame-pointer>)
+target_link_options(ASAN::ASAN INTERFACE -fsanitize=address)
+target_link_libraries(sdl3quake PRIVATE $<$<BOOL:${SDL3QUAKE_USE_ASAN}>:ASAN::ASAN>)
