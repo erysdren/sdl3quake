@@ -13,6 +13,7 @@ modernized faithful Quake sourceport utilizing SDL3 and C23 features
 - add support for BSP2 and protocol 666
 - add support for external textures (convert to indexed at load time)
 - add support for resizing window on the fly (also setting "video mode")
+- replace all hardcoded sound and model paths that assume Quake game data
 
 ## Building
 
