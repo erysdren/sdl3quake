@@ -44,6 +44,11 @@ set_target_properties(sdl3quake PROPERTIES C_STANDARD_REQUIRED ON C_STANDARD 23)
 
 # address sanitizer
 if(${SDL3QUAKE_USE_ASAN})
-	target_compile_options(sdl3quake PRIVATE -fsanitize=address)
-	target_link_options(sdl3quake PRIVATE -fsanitize=address)
+	if(MSVC)
+		target_compile_options(sdl3quake PRIVATE /fsanitize=address)
+		target_link_options(sdl3quake PRIVATE /fsanitize=address)
+	else()
+		target_compile_options(sdl3quake PRIVATE -fsanitize=address -fno-omit-frame-pointer)
+		target_link_options(sdl3quake PRIVATE -fsanitize=address)
+	endif()
 endif()
