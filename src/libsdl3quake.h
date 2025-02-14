@@ -25,7 +25,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #endif
 
 #ifndef QUAKEGENERIC_RES_Y
-#define QUAKEGENERIC_RES_Y 240
+#define QUAKEGENERIC_RES_Y 200
 #endif
 
 #define QUAKEGENERIC_JOY_MAX_AXES 6
