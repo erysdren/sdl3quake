@@ -22,6 +22,14 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define VID_CBITS	6
 #define VID_GRADES	(1 << VID_CBITS)
 
+#ifndef BASEWIDTH
+#define BASEWIDTH 320
+#endif
+
+#ifndef BASEHEIGHT
+#define BASEHEIGHT 200
+#endif
+
 typedef struct vrect_s
 {
 	int				x,y,width,height;

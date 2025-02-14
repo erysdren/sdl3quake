@@ -17,15 +17,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see https://www.gnu.org/licenses/
 */
 
-#ifndef __QUAKEGENERIC__
-#define __QUAKEGENERIC__
-
-#ifndef QUAKEGENERIC_RES_X
-#define QUAKEGENERIC_RES_X 320
-#endif
-
-#ifndef QUAKEGENERIC_RES_Y
-#define QUAKEGENERIC_RES_Y 200
+#ifndef _SDL3QUAKE_H_
+#define _SDL3QUAKE_H_
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 #define QUAKEGENERIC_JOY_MAX_AXES 6
@@ -35,11 +30,6 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define QUAKEGENERIC_JOY_AXIS_R 3
 #define QUAKEGENERIC_JOY_AXIS_U 4
 #define QUAKEGENERIC_JOY_AXIS_V 5
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 // provided functions
 void QG_Tick(double duration);
@@ -57,5 +47,4 @@ void QG_GetJoyAxes(float *axes);
 #ifdef __cplusplus
 }
 #endif
-
-#endif // __QUAKEGENERIC__
+#endif /* _SDL3QUAKE_H_ */

@@ -22,21 +22,9 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include "quakedef.h"
 #include "d_local.h"
 
-#include "libsdl3quake.h"
+#include "sdl3quake.h"
 
 viddef_t	vid;				// global video state
-
-#ifdef QUAKEGENERIC_RES_X
-#define	BASEWIDTH	QUAKEGENERIC_RES_X
-#else
-#define	BASEWIDTH	320
-#endif
-
-#ifdef QUAKEGENERIC_RES_Y
-#define	BASEHEIGHT	QUAKEGENERIC_RES_Y
-#else
-#define	BASEHEIGHT	200
-#endif
 
 byte	vid_buffer[BASEWIDTH*BASEHEIGHT];
 int16_t	zbuffer[BASEWIDTH*BASEHEIGHT];

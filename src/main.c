@@ -18,7 +18,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 */
 
 #include "quakedef.h"
-#include "libsdl3quake.h"
+#include "sdl3quake.h"
 
 #include <assert.h>
 #include <SDL3/SDL.h>
@@ -68,26 +68,26 @@ void QG_Init(void)
 	SDL_Init(SDL_INIT_VIDEO);
 
 	// create window
-	window = SDL_CreateWindow(GAMETITLE, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
-	SDL_SetWindowMinimumSize(window, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+	window = SDL_CreateWindow(GAMETITLE, BASEWIDTH, BASEHEIGHT, SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
+	SDL_SetWindowMinimumSize(window, BASEWIDTH, BASEHEIGHT);
 
 	// create renderer
 	renderer = SDL_CreateRenderer(window, NULL);
-	SDL_SetRenderLogicalPresentation(renderer, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+	SDL_SetRenderLogicalPresentation(renderer, BASEWIDTH, BASEHEIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
 	// get window pixel format
 	SDL_PixelFormat window_format = SDL_GetWindowPixelFormat(window);
 
 	// create texture
-	texture = SDL_CreateTexture(renderer, window_format, SDL_TEXTUREACCESS_STREAMING, QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y);
+	texture = SDL_CreateTexture(renderer, window_format, SDL_TEXTUREACCESS_STREAMING, BASEWIDTH, BASEHEIGHT);
 	SDL_SetTextureScaleMode(texture, SDL_SCALEMODE_NEAREST);
 
 	// create draw surface
-	surface8 = SDL_CreateSurfaceFrom(QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, SDL_PIXELFORMAT_INDEX8, NULL, QUAKEGENERIC_RES_X);
+	surface8 = SDL_CreateSurfaceFrom(BASEWIDTH, BASEHEIGHT, SDL_PIXELFORMAT_INDEX8, NULL, BASEWIDTH);
 	palette = SDL_CreateSurfacePalette(surface8);
 
 	// create screen surface
-	surface24 = SDL_CreateSurfaceFrom(QUAKEGENERIC_RES_X, QUAKEGENERIC_RES_Y, window_format, NULL, QUAKEGENERIC_RES_X * SDL_BYTESPERPIXEL(window_format));
+	surface24 = SDL_CreateSurfaceFrom(BASEWIDTH, BASEHEIGHT, window_format, NULL, BASEWIDTH * SDL_BYTESPERPIXEL(window_format));
 
 	SDL_SetWindowRelativeMouseMode(window, true);
 
@@ -306,7 +306,7 @@ void QG_Quit(void)
 void QG_DrawFrame(void *pixels)
 {
 	surface8->pixels = pixels;
-	surface8->pitch = QUAKEGENERIC_RES_X;
+	surface8->pitch = BASEWIDTH;
 
 	if (SDL_LockTexture(texture, NULL, &surface24->pixels, &surface24->pitch))
 	{
