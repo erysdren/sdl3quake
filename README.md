@@ -2,11 +2,17 @@
 
 modernized faithful Quake sourceport utilizing SDL3 and C23 features
 
-## Notes
+## TODO
 
-- lacks audio
-- lacks netplay
-- lacks all extended Quake engine features from the past 29 years
+- add audio support (maybe use SDL3_mixer?)
+- add netplay support (maybe use SDL3_net?)
+- make menu system more extensible (maybe implement basic MenuQC?)
+- support using the mouse in menus
+- replace hardcoded clientside tempentities with some kind of scriptable system
+- add support for extended opcodes to the QCVM
+- add support for BSP2 and protocol 666
+- add support for external textures (convert to indexed at load time)
+- add support for resizing window on the fly (also setting "video mode")
 
 ## Building
 
