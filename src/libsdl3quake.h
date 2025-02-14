@@ -20,8 +20,13 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #ifndef __QUAKEGENERIC__
 #define __QUAKEGENERIC__
 
+#ifndef QUAKEGENERIC_RES_X
 #define QUAKEGENERIC_RES_X 320
+#endif
+
+#ifndef QUAKEGENERIC_RES_Y
 #define QUAKEGENERIC_RES_Y 240
+#endif
 
 #define QUAKEGENERIC_JOY_MAX_AXES 6
 #define QUAKEGENERIC_JOY_AXIS_X 0

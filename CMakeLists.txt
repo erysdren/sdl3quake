@@ -13,6 +13,8 @@ set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
 set(SDL3QUAKE_GAMETITLE "Quake" CACHE STRING "Displayed game title")
 set(SDL3QUAKE_GAMEEXEC "quake.rc" CACHE STRING "Default script to execute at engine start (relative to base game directory)")
 set(SDL3QUAKE_GAMEVERSION "1.09" CACHE STRING "Displayed game version (must be numeric)")
+set(SDL3QUAKE_RENDERWIDTH "320" CACHE STRING "Game render width (must be numeric)")
+set(SDL3QUAKE_RENDERHEIGHT "240" CACHE STRING "Game render height (must be numeric)")
 option(SDL3QUAKE_USE_ASAN "Use Address Sanitizer" OFF)
 
 # grab all sources
@@ -33,6 +35,8 @@ target_compile_definitions(sdl3quake PUBLIC
 	GAMETITLE=$<QUOTE>${SDL3QUAKE_GAMETITLE}$<QUOTE>
 	GAMEEXEC=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEEXEC}>$<QUOTE>
 	GAMEVERSION=${SDL3QUAKE_GAMEVERSION}
+	QUAKEGENERIC_RES_X=${SDL3QUAKE_RENDERWIDTH}
+	QUAKEGENERIC_RES_Y=${SDL3QUAKE_RENDERHEIGHT}
 )
 
 # require C23
