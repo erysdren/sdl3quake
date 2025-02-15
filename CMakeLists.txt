@@ -12,6 +12,7 @@ find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
 set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
 set(SDL3QUAKE_GAMETITLE "Quake" CACHE STRING "Displayed game title")
 set(SDL3QUAKE_GAMEEXEC "quake.rc" CACHE STRING "Default script to execute at engine start (relative to base game directory)")
+set(SDL3QUAKE_GAMEPOP "pop.lmp" CACHE STRING "Proof-of-purchase check file")
 set(SDL3QUAKE_GAMEVERSION "1.09" CACHE STRING "Displayed game version (must be numeric)")
 set(SDL3QUAKE_RENDERWIDTH "320" CACHE STRING "Game render width (must be numeric)")
 set(SDL3QUAKE_RENDERHEIGHT "240" CACHE STRING "Game render height (must be numeric)")
@@ -34,6 +35,7 @@ target_compile_definitions(sdl3quake PUBLIC
 	GAMEDIR=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEDIR}>$<QUOTE>
 	GAMETITLE=$<QUOTE>${SDL3QUAKE_GAMETITLE}$<QUOTE>
 	GAMEEXEC=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEEXEC}>$<QUOTE>
+	GAMEPOP=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEPOP}>$<QUOTE>
 	GAMEVERSION=${SDL3QUAKE_GAMEVERSION}
 	BASEWIDTH=${SDL3QUAKE_RENDERWIDTH}
 	BASEHEIGHT=${SDL3QUAKE_RENDERHEIGHT}

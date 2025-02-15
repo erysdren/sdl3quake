@@ -39,6 +39,10 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #define GAMETITLE "Quake"
 #endif
 
+#ifndef GAMEPOP
+#define GAMEPOP "pop.lmp"
+#endif
+
 #include <math.h>
 #include <string.h>
 #include <stdarg.h>
