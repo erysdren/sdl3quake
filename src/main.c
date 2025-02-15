@@ -19,6 +19,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 #include "quakedef.h"
 #include "sdl3quake.h"
+#include "vgatext.h"
 
 #include <assert.h>
 #include <SDL3/SDL.h>
@@ -294,6 +295,17 @@ void QG_GetMouseMove(int *x, int *y)
 
 void QG_Quit(void)
 {
+	extern int static_registered;
+	Uint16 *screen;
+
+	if (static_registered)
+		screen = (Uint16 *)COM_LoadHunkFile("end2.bin");
+	else
+		screen = (Uint16 *)COM_LoadHunkFile("end2.bin");
+
+	if (screen)
+		vgatext_main(window, screen);
+
 	if (window) SDL_DestroyWindow(window);
 	if (renderer) SDL_DestroyRenderer(renderer);
 	if (texture) SDL_DestroyTexture(texture);
