@@ -21,6 +21,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 #include "quakedef.h"
 #include "errno.h"
+#include "sdl3quake.h"
 
 qboolean isDedicated;
 
@@ -175,6 +176,7 @@ void Sys_Printf (char *fmt, ...)
 
 void Sys_Quit (void)
 {
+	QG_Quit();
 	exit (0);
 }
 
