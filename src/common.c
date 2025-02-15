@@ -53,11 +53,13 @@ char	com_cmdline[CMDLINE_LENGTH];
 
 qboolean		standard_quake = true, rogue, hipnotic;
 
+#if USEGAMEPOP
 // this graphic needs to be in the pak file to use registered features
 static const uint8_t pop[] =
 {
 #embed GAMEPOP
 };
+#endif
 
 /*
 
@@ -709,6 +711,7 @@ being registered.
 */
 void COM_CheckRegistered (void)
 {
+#if USEGAMEPOP
 	int             h;
 	uint8_t  check[sizeof(pop)];
 	int                     i;
@@ -734,6 +737,7 @@ void COM_CheckRegistered (void)
 	Cvar_Set ("registered", "1");
 	static_registered = 1;
 	Con_Printf ("Playing registered version.\n");
+#endif
 }
 
 
