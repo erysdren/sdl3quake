@@ -28,6 +28,8 @@ cvar_t volume = {"volume", "0.7", true};
  
 void S_Init (void)
 {
+	Cvar_RegisterVariable (&bgmvolume);
+	Cvar_RegisterVariable (&volume);
 }
 
 void S_AmbientOff (void)
