@@ -295,6 +295,7 @@ void QG_GetMouseMove(int *x, int *y)
 
 void QG_Quit(void)
 {
+#if USEGAMEEND
 	extern int static_registered;
 	Uint16 *screen;
 
@@ -305,6 +306,7 @@ void QG_Quit(void)
 
 	if (screen)
 		vgatext_main(window, screen);
+#endif
 
 	if (window) SDL_DestroyWindow(window);
 	if (renderer) SDL_DestroyRenderer(renderer);
