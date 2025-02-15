@@ -328,6 +328,8 @@ void QG_SetPalette(unsigned char pal[768])
 		palette->colors[i].b = pal[i * 3 + 2];
 		palette->colors[i].a = 255;
 	}
+
+	SDL_SetSurfacePalette(surface8, palette);
 }
 
 int main(int argc, char *argv[])
