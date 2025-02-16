@@ -302,7 +302,7 @@ void QG_Quit(void)
 	if (static_registered)
 		screen = (Uint16 *)COM_LoadHunkFile("end2.bin");
 	else
-		screen = (Uint16 *)COM_LoadHunkFile("end2.bin");
+		screen = (Uint16 *)COM_LoadHunkFile("end1.bin");
 
 	if (screen)
 		vgatext_main(window, screen);
