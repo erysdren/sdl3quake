@@ -138,6 +138,8 @@ void R_TeleportSplash (vec3_t org);
 
 void R_PushDlights (void);
 
+qboolean R_InitColoredLighting (void);
+
 
 //
 // surface cache related

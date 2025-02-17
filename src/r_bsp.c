@@ -52,6 +52,9 @@ static mvertex_t	*pfrontenter, *pfrontexit;
 
 static qboolean		makeclippededge;
 
+static uint8_t r_clut[256][256];
+static qboolean r_clut_initialized = false;
+
 
 //===========================================================================
 
@@ -672,3 +675,19 @@ void R_RenderWorld (void)
 }
 
 
+
+/*
+================
+R_InitColoredLighting
+================
+*/
+qboolean R_InitColoredLighting (void)
+{
+	extern byte *host_basepal;
+
+	if (r_clut_initialized)
+		return true;
+
+	r_clut_initialized = true;
+	return true;
+}

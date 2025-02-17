@@ -360,6 +360,9 @@ typedef struct model_s
 //
 	cache_user_t	cache;		// only access through Mod_Extradata
 
+// erysdren: colored lighting
+	qboolean uselit;
+
 } model_t;
 
 //============================================================================

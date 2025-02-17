@@ -501,15 +501,62 @@ void Mod_LoadTextures (lump_t *l)
 Mod_LoadLighting
 =================
 */
+#define LIT_MAGIC "QLIT"
+#define LIT_VERSION 1
 void Mod_LoadLighting (lump_t *l)
 {
-	if (!l->filelen)
+	char litfilename[MAX_OSPATH];
+
+	// setup
+	loadmodel->lightdata = NULL;
+	loadmodel->uselit = false;
+
+	// make lit filename
+	strncpy(litfilename, loadmodel->name, sizeof(litfilename));
+	COM_StripExtension(litfilename, litfilename);
+	strncat(litfilename, ".lit", sizeof(litfilename) - strlen(litfilename) - 1);
+
+	// load lit file data
+	uint8_t *litdata = (uint8_t *)COM_LoadHunkFile(litfilename);
+	if (litdata)
 	{
-		loadmodel->lightdata = NULL;
-		return;
+		/* check magic */
+		if (memcmp(litdata, LIT_MAGIC, 4) != 0)
+		{
+			Con_Printf("Unknown .lit file signature 0x%08x\n", *(int32_t *)litdata);
+			goto normallighting;
+		}
+
+		/* check version */
+		int litversion = LittleLong(*(int32_t *)(litdata + 4));
+		if (litversion != LIT_VERSION)
+		{
+			Con_Printf("Unknown .lit file version %d\n", litversion);
+			goto normallighting;
+		}
+
+		/* check file size */
+		int litsize = 8 + l->filelen * 3;
+		if (litsize != com_filesize)
+		{
+			Con_Printf("Unexpected .lit file size %d (should be %d)\n", com_filesize, litsize);
+			goto normallighting;
+		}
+
+		/* init colored lighting */
+		if (!R_InitColoredLighting())
+		{
+			Con_Printf("Failed to initialize colored lighting\n");
+			goto normallighting;
+		}
 	}
-	loadmodel->lightdata = Hunk_AllocName ( l->filelen, loadname);	
-	memcpy (loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
+
+normallighting:
+	if (l->filelen > 0)
+	{
+		loadmodel->lightdata = Hunk_AllocName ( l->filelen, loadname);
+		memcpy (loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
+	}
 }
 
 
