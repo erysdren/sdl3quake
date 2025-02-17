@@ -1243,6 +1243,8 @@ byte *COM_LoadFile (char *path, int usehunk)
 	COM_CloseFile (h);
 	Draw_EndDisc ();
 
+	com_filesize = len;
+
 	return buf;
 }
 
