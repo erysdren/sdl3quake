@@ -138,6 +138,7 @@ void R_TeleportSplash (vec3_t org);
 
 void R_PushDlights (void);
 
+byte R_FindColor (int r, int g, int b);
 qboolean R_InitColoredLighting (void);
 
 

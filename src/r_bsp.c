@@ -52,8 +52,8 @@ static mvertex_t	*pfrontenter, *pfrontexit;
 
 static qboolean		makeclippededge;
 
-static uint8_t r_clut[256][256];
-static qboolean r_clut_initialized = false;
+uint8_t r_clut[256][256];
+qboolean r_clut_initialized = false;
 
 
 //===========================================================================
@@ -678,6 +678,37 @@ void R_RenderWorld (void)
 
 /*
 ================
+R_FindColor
+================
+*/
+#define SQR(x) ((x) * (x))
+byte R_FindColor (int r, int g, int b)
+{
+	extern byte *host_basepal;
+	int32_t dist = INT32_MAX;
+	byte pen = 0;
+
+	for (int i = 0; i < 256; i++)
+	{
+		int32_t rank =
+			SQR(host_basepal[i * 3 + 0] - r) +
+			SQR(host_basepal[i * 3 + 1] - g) +
+			SQR(host_basepal[i * 3 + 2] - b);
+
+		if (rank < dist)
+		{
+			pen = i;
+			dist = rank;
+		}
+	}
+
+	return pen;
+}
+
+
+
+/*
+================
 R_InitColoredLighting
 ================
 */
@@ -687,6 +718,20 @@ qboolean R_InitColoredLighting (void)
 
 	if (r_clut_initialized)
 		return true;
+
+	for (int y = 0; y < 256; y++)
+	{
+		for (int x = 0; x < 256; x++)
+		{
+			int r, g, b;
+
+			r = (host_basepal[x * 3 + 0] + host_basepal[y * 3 + 0]) >> 1;
+			g = (host_basepal[x * 3 + 1] + host_basepal[y * 3 + 1]) >> 1;
+			b = (host_basepal[x * 3 + 2] + host_basepal[y * 3 + 2]) >> 1;
+
+			r_clut[y][x] = R_FindColor(r, g, b);
+		}
+	}
 
 	r_clut_initialized = true;
 	return true;

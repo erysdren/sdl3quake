@@ -505,21 +505,30 @@ Mod_LoadLighting
 #define LIT_VERSION 1
 void Mod_LoadLighting (lump_t *l)
 {
+	extern cvar_t r_coloredlighting;
+
 	char litfilename[MAX_OSPATH];
 
-	// setup
 	loadmodel->lightdata = NULL;
 	loadmodel->uselit = false;
 
-	// make lit filename
+	if (r_coloredlighting.value <= 0)
+		goto normallighting;
+
+	/* load lit file data */
 	strncpy(litfilename, loadmodel->name, sizeof(litfilename));
 	COM_StripExtension(litfilename, litfilename);
 	strncat(litfilename, ".lit", sizeof(litfilename) - strlen(litfilename) - 1);
-
-	// load lit file data
 	uint8_t *litdata = (uint8_t *)COM_LoadHunkFile(litfilename);
 	if (litdata)
 	{
+		/* check if we have any lighting data */
+		if (l->filelen <= 0)
+		{
+			Con_Printf(".lit file present but map has no lighting!\n");
+			goto normallighting;
+		}
+
 		/* check magic */
 		if (memcmp(litdata, LIT_MAGIC, 4) != 0)
 		{
@@ -549,6 +558,22 @@ void Mod_LoadLighting (lump_t *l)
 			Con_Printf("Failed to initialize colored lighting\n");
 			goto normallighting;
 		}
+
+		/* convert lightmap to indexed */
+		loadmodel->lightdata = Hunk_AllocName(l->filelen, loadname);
+		for (int i = 0; i < l->filelen; i++)
+		{
+			int r, g, b;
+
+			r = litdata[8 + (i * 3) + 0];
+			g = litdata[8 + (i * 3) + 1];
+			b = litdata[8 + (i * 3) + 2];
+
+			loadmodel->lightdata[i] = R_FindColor(r, g, b);
+		}
+
+		loadmodel->uselit = true;
+		return;
 	}
 
 normallighting:
