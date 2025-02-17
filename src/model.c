@@ -569,7 +569,12 @@ void Mod_LoadLighting (lump_t *l)
 			g = litdata[8 + (i * 3) + 1];
 			b = litdata[8 + (i * 3) + 2];
 
-			loadmodel->lightdata[i] = R_FindColor(r, g, b);
+			/* get color from lit file and brightness from embedded lighmtap */
+			uint8_t color = R_FindColor(r, g, b);
+			uint8_t light = (mod_base + l->fileofs)[i];
+
+			/* do colormap blend for final pixel */
+			loadmodel->lightdata[i] = vid.colormap[color + (light / 8) * 256];
 		}
 
 		loadmodel->uselit = true;
