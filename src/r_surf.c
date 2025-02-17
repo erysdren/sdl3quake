@@ -159,15 +159,21 @@ void R_BuildLightMap (void)
 
 
 // add all the lightmaps
-	if (lightmap)
+	if (lightmap && cl.worldmodel->colorlightdata)
+	{
+
+	}
+	else if (lightmap)
+	{
 		for (maps = 0 ; maps < MAXLIGHTMAPS && surf->styles[maps] != 255 ;
 			 maps++)
 		{
-			scale = r_drawsurf.lightadj[maps];	// 8.8 fraction		
+			scale = r_drawsurf.lightadj[maps];	// 8.8 fraction
 			for (i=0 ; i<size ; i++)
 				blocklights[i] += lightmap[i] * scale;
 			lightmap += size;	// skip to next lightmap
 		}
+	}
 
 // add all the dynamic lights
 	if (surf->dlightframe == r_framecount)
@@ -341,10 +347,7 @@ void R_DrawSurfaceBlock8_mip0 (void)
 			for (b=15; b>=0; b--)
 			{
 				pix = psource[b];
-				if (cl.worldmodel->uselit)
-					prowdest[b] = r_clut[pix][light & 0xFF];
-				else
-					prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
+				prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
 				light += lightstep;
 			}
 	
@@ -393,10 +396,7 @@ void R_DrawSurfaceBlock8_mip1 (void)
 			for (b=7; b>=0; b--)
 			{
 				pix = psource[b];
-				if (cl.worldmodel->uselit)
-					prowdest[b] = r_clut[pix][light & 0xFF];
-				else
-					prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
+				prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
 				light += lightstep;
 			}
 	
@@ -445,10 +445,7 @@ void R_DrawSurfaceBlock8_mip2 (void)
 			for (b=3; b>=0; b--)
 			{
 				pix = psource[b];
-				if (cl.worldmodel->uselit)
-					prowdest[b] = r_clut[pix][light & 0xFF];
-				else
-					prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
+				prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
 				light += lightstep;
 			}
 	
@@ -497,10 +494,7 @@ void R_DrawSurfaceBlock8_mip3 (void)
 			for (b=1; b>=0; b--)
 			{
 				pix = psource[b];
-				if (cl.worldmodel->uselit)
-					prowdest[b] = r_clut[pix][light & 0xFF];
-				else
-					prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
+				prowdest[b] = ((unsigned char *)vid.colormap)[(light & 0xFF00) + pix];
 				light += lightstep;
 			}
 	

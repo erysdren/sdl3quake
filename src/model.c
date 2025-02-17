@@ -510,7 +510,7 @@ void Mod_LoadLighting (lump_t *l)
 	char litfilename[MAX_OSPATH];
 
 	loadmodel->lightdata = NULL;
-	loadmodel->uselit = false;
+	loadmodel->colorlightdata = NULL;
 
 	if (r_coloredlighting.value <= 0)
 		goto normallighting;
@@ -560,7 +560,7 @@ void Mod_LoadLighting (lump_t *l)
 		}
 
 		/* convert lightmap to indexed */
-		loadmodel->lightdata = Hunk_AllocName(l->filelen, loadname);
+		loadmodel->colorlightdata = Hunk_AllocName(l->filelen, loadname);
 		for (int i = 0; i < l->filelen; i++)
 		{
 			int r, g, b;
@@ -574,11 +574,8 @@ void Mod_LoadLighting (lump_t *l)
 			uint8_t light = (mod_base + l->fileofs)[i];
 
 			/* do colormap blend for final pixel */
-			loadmodel->lightdata[i] = vid.colormap[color + (light / 8) * 256];
+			loadmodel->colorlightdata[i] = vid.colormap[color + (light / 8) * 256];
 		}
-
-		loadmodel->uselit = true;
-		return;
 	}
 
 normallighting:

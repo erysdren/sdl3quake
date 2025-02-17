@@ -353,15 +353,13 @@ typedef struct model_s
 
 	byte		*visdata;
 	byte		*lightdata;
+	byte		*colorlightdata;
 	char		*entities;
 
 //
 // additional model data
 //
 	cache_user_t	cache;		// only access through Mod_Extradata
-
-// erysdren: colored lighting
-	qboolean uselit;
 
 } model_t;
 
