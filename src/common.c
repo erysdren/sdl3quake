@@ -714,7 +714,6 @@ void COM_CheckRegistered (void)
 #if USEGAMEPOP
 	int             h;
 	uint8_t  check[sizeof(pop)];
-	int                     i;
 
 	COM_OpenFile("gfx/pop.lmp", &h);
 	static_registered = 0;
@@ -1060,10 +1059,9 @@ int COM_FindFile (char *filename, int *handle, FILE **file)
 {
 	searchpath_t    *search;
 	char            netpath[MAX_OSPATH];
-	char            cachepath[MAX_OSPATH];
 	pack_t          *pak;
 	int                     i;
-	int                     findtime, cachetime;
+	int                     findtime;
 
 	if (file && handle)
 		Sys_Error ("COM_FindFile: both handle and file set");

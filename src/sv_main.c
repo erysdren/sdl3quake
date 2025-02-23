@@ -643,7 +643,7 @@ void SV_WriteClientdataToMessage (edict_t *ent, sizebuf_t *msg)
 		bits |= SU_ARMOR;
 
 //	if (ent->v.weapon)
-		bits |= SU_WEAPON;
+	bits |= SU_WEAPON;
 
 // send the data
 
