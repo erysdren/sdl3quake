@@ -48,6 +48,11 @@ target_compile_definitions(sdl3quake PUBLIC
 # require C23
 set_target_properties(sdl3quake PROPERTIES C_STANDARD_REQUIRED ON C_STANDARD 23)
 
+# extra warnings
+if(NOT MSVC)
+	target_compile_options(sdl3quake PUBLIC -Wall)
+endif()
+
 # address sanitizer
 add_library(ASAN::ASAN IMPORTED INTERFACE)
 target_compile_options(ASAN::ASAN INTERFACE -fsanitize=address $<$<NOT:$<COMPILE_LANG_AND_ID:C,MSVC>>:-fno-omit-frame-pointer>)

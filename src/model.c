@@ -1422,9 +1422,7 @@ Mod_LoadAliasSkin
 void * Mod_LoadAliasSkin (void * pin, int *pskinindex, int skinsize,
 	aliashdr_t *pheader)
 {
-	int		i;
 	byte	*pskin, *pinskin;
-	uint16_t	*pusskin;
 
 	pskin = Hunk_AllocName (skinsize, loadname);
 	pinskin = (byte *)pin;
@@ -1729,9 +1727,7 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe)
 {
 	dspriteframe_t		*pinframe;
 	mspriteframe_t		*pspriteframe;
-	int					i, width, height, size, origin[2];
-	uint16_t		*ppixout;
-	byte				*ppixin;
+	int					width, height, size, origin[2];
 
 	pinframe = (dspriteframe_t *)pin;
 

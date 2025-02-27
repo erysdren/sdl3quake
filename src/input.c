@@ -184,7 +184,7 @@ void IN_JoyMove (usercmd_t *cmd)
 {
 	float	axisValues[QUAKEGENERIC_JOY_MAX_AXES] = {0};
 	float	speed, aspeed;
-	float	fAxisValue, fTemp;
+	float	fAxisValue;
 	int		i;
 
 	if ( joy_advancedinit != true )

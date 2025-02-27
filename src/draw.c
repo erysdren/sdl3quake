@@ -108,8 +108,6 @@ Draw_Init
 */
 void Draw_Init (void)
 {
-	int		i;
-
 	draw_chars = W_GetLumpName ("conchars");
 	draw_disc = W_GetLumpName ("disc");
 	draw_backtile = W_GetLumpName ("backtile");
@@ -135,7 +133,6 @@ void Draw_Character (int x, int y, int num)
 {
 	byte			*dest;
 	byte			*source;
-	uint16_t	*pusdest;
 	int				drawline;	
 	int				row, col;
 
@@ -255,8 +252,7 @@ Draw_Pic
 void Draw_Pic (int x, int y, qpic_t *pic)
 {
 	byte			*dest, *source;
-	uint16_t	*pusdest;
-	int				v, u;
+	int				v;
 
 	if ((x < 0) ||
 		(x + pic->width > vid.width) ||
@@ -287,7 +283,6 @@ Draw_TransPic
 void Draw_TransPic (int x, int y, qpic_t *pic)
 {
 	byte	*dest, *source, tbyte;
-	uint16_t	*pusdest;
 	int				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -351,7 +346,6 @@ Draw_TransPicTranslate
 void Draw_TransPicTranslate (int x, int y, qpic_t *pic, byte *translation)
 {
 	byte	*dest, *source, tbyte;
-	uint16_t	*pusdest;
 	int				v, u;
 
 	if (x < 0 || (unsigned)(x + pic->width) > vid.width || y < 0 ||
@@ -440,7 +434,6 @@ void Draw_ConsoleBackground (int lines)
 {
 	int				x, y, v;
 	byte			*src, *dest;
-	uint16_t	*pusdest;
 	int				f, fstep;
 	qpic_t			*conback;
 	char			ver[100];
@@ -607,8 +600,6 @@ Fills a box of pixels with a single color
 void Draw_Fill (int x, int y, int w, int h, int c)
 {
 	byte			*dest;
-	uint16_t	*pusdest;
-	unsigned		uc;
 	int				u, v;
 
 	dest = vid.buffer + y*vid.rowbytes + x;

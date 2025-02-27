@@ -77,7 +77,6 @@ int vgatext_main(SDL_Window *window, Uint16 *screen)
 	SDL_Surface **windowsurface;
 	SDL_Surface *windowsurface0;
 	SDL_Surface *windowsurface1;
-	SDL_Color colors[16];
 	SDL_Rect rect;
 
 	if (!window || !screen)
