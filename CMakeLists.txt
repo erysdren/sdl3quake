@@ -7,6 +7,7 @@ find_package(Math)
 
 # get SDL3
 find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
+find_package(SDL3_mixer REQUIRED CONFIG REQUIRED COMPONENTS SDL3_mixer-shared)
 
 # build-time options
 set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
@@ -29,6 +30,7 @@ add_executable(sdl3quake ${SDL3QUAKE_SOURCES})
 # link stuff
 target_link_libraries(sdl3quake PUBLIC
 	SDL3::SDL3
+	SDL3_mixer::SDL3_mixer
 	$<TARGET_NAME_IF_EXISTS:Math::Math>
 )
 
