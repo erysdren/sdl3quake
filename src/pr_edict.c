@@ -907,7 +907,8 @@ to call ED_CallSpawnFunctions () to let the objects initialize themselves.
 ================
 */
 void ED_LoadFromFile (char *data)
-{	
+{
+	char spawnfunc[256];
 	edict_t		*ent;
 	int			inhibit;
 	dfunction_t	*func;
@@ -963,14 +964,21 @@ void ED_LoadFromFile (char *data)
 		}
 
 	// look for the spawn function
-		func = ED_FindFunction ( PR_GetString(ent->v.classname) );
+	// erysdren: look for FTE/DP spawnfunc_* function first to support QuakeC classes
+		snprintf(spawnfunc, sizeof(spawnfunc), "spawnfunc_%s", PR_GetString(ent->v.classname));
+		func = ED_FindFunction (spawnfunc);
 
 		if (!func)
 		{
-			Con_Printf ("No spawn function for:\n");
-			ED_Print (ent);
-			ED_Free (ent);
-			continue;
+			func = ED_FindFunction (PR_GetString(ent->v.classname));
+
+			if (!func)
+			{
+				Con_Printf ("No spawn function for:\n");
+				ED_Print (ent);
+				ED_Free (ent);
+				continue;
+			}
 		}
 
 		pr_global_struct->self = EDICT_TO_PROG(ent);
