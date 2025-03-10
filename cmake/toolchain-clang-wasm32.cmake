@@ -1,0 +1,18 @@
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_PROCESSOR wasm)
+
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_C_COMPILER_TARGET wasm32)
+set(CMAKE_C_FLAGS_INIT --no-standard-libraries)
+
+set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_CXX_COMPILER_TARGET wasm32)
+set(CMAKE_CXX_FLAGS_INIT --no-standard-libraries)
+
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+set(CMAKE_EXE_LINKER_FLAGS_INIT --for-linker=--no-entry)
+
+set(CMAKE_EXECUTABLE_SUFFIX .wasm)
+set(CMAKE_EXECUTABLE_SUFFIX_C .wasm)
+set(CMAKE_EXECUTABLE_SUFFIX_CXX .wasm)
