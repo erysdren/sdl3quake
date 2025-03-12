@@ -126,8 +126,9 @@ typedef struct entity {
  * game code imports
  */
 
-entity_t *PR_IMPORT(spawn)(void);
-void PR_IMPORT(remove)(entity_t *e);
+entity_t *PR_IMPORT(spawn)(void); /**< create a new entity */
+void PR_IMPORT(remove)(entity_t *e); /**< remove the specified entity */
+void PR_IMPORT(print)(const char *s); /**< print to the server console */
 
 /*
  * game code exports
