@@ -135,8 +135,8 @@ void PR_IMPORT(print)(const char *s); /**< print to the server console */
  */
 
 #ifdef SERVER
-void PR_EXPORT(StartFrame)(void); /**< called before physics are run every frame */
-void PR_EXPORT(EndFrame)(void); /**< called after physics are run every frame */
+void PR_EXPORT(StartFrame)(entity_t *self); /**< called before physics are run every frame */
+void PR_EXPORT(EndFrame)(entity_t *self); /**< called after physics are run every frame */
 void PR_EXPORT(ClientStartFrame)(entity_t *self); /**< called for each client before physics are run every frame */
 void PR_EXPORT(ClientEndFrame)(entity_t *self); /**< called for each client after physics are run every frame */
 void PR_EXPORT(ClientConnect)(entity_t *self); /**< called for each client when they have fully connected */
