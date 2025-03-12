@@ -34,8 +34,15 @@ extern "C" {
 typedef float vec3_t __attribute__((ext_vector_type(3)));
 #define vec3(x, y, z) (vec3_t){x, y, z}
 
-/* entity type */
-typedef struct entvars {
+/* import/export helper macros */
+#define PR_EXPORT(n) __attribute__((export_name(#n), used, visibility("default"))) n
+#define PR_IMPORT(n) __attribute__((import_module("env"), import_name(#n))) n
+
+/*
+ * entity type
+ */
+
+typedef struct entity {
 	float modelindex;
 	vec3_t absmin;
 	vec3_t absmax;
@@ -56,12 +63,12 @@ typedef struct entvars {
 	vec3_t mins;
 	vec3_t maxs;
 	vec3_t size;
-	func_t touch;
-	func_t use;
-	func_t think;
-	func_t blocked;
+	void (*touch)(struct entity *self, struct entity *other);
+	void (*use)(struct entity *self, struct entity *activator);
+	void (*think)(struct entity *self);
+	void (*blocked)(struct entity *self);
 	float nextthink;
-	entity_t *groundentity;
+	struct entity *groundentity;
 	float health;
 	float frags;
 	float weapon;
@@ -74,7 +81,7 @@ typedef struct entvars {
 	float ammo_cells;
 	float items;
 	float takedamage;
-	entity_t *chain;
+	struct entity *chain;
 	float deadflag;
 	vec3_t view_ofs;
 	float button0;
@@ -85,7 +92,7 @@ typedef struct entvars {
 	vec3_t v_angle;
 	float idealpitch;
 	const char *netname;
-	entity_t *enemy;
+	struct entity *enemy;
 	float flags;
 	float colormap;
 	float team;
@@ -97,15 +104,15 @@ typedef struct entvars {
 	float watertype;
 	float ideal_yaw;
 	float yaw_speed;
-	entity_t *aiment;
-	entity_t *goalentity;
+	struct entity *aiment;
+	struct entity *goalentity;
 	float spawnflags;
 	const char *target;
 	const char *targetname;
 	float dmg_take;
 	float dmg_save;
-	entity_t *dmg_inflictor;
-	entity_t *owner;
+	struct entity *dmg_inflictor;
+	struct entity *owner;
 	vec3_t movedir;
 	const char *message;
 	float sounds;
@@ -113,24 +120,31 @@ typedef struct entvars {
 	const char *noise1;
 	const char *noise2;
 	const char *noise3;
-} entvars_t;
+} entity_t;
 
-/* these are for the wasm gamecode only */
-#if defined(__wasm__)
-#define PR_EXPORT(n) __attribute__((export_name(#n), used, visibility("default"))) n
-#define PR_IMPORT(n) __attribute__((import_module("env"), import_name(#n))) n
-void PR_EXPORT(StartFrame)(void);
-void PR_EXPORT(PlayerPreThink)(void);
-void PR_EXPORT(PlayerPostThink)(void);
-void PR_EXPORT(ClientKill)(void);
-void PR_EXPORT(ClientConnect)(void);
-void PR_EXPORT(PutClientInServer)(void);
-void PR_EXPORT(ClientDisconnect)(void);
-void PR_EXPORT(SetNewParms)(void);
-void PR_EXPORT(SetChangeParms)(void);
-#else
-#define PR_EXPORT(n) n
-#define PR_IMPORT(n) n
+/*
+ * game code imports
+ */
+
+entity_t *PR_IMPORT(spawn)(void);
+void PR_IMPORT(remove)(entity_t *e);
+
+/*
+ * game code exports
+ */
+
+#ifdef SERVER
+void PR_EXPORT(StartFrame)(void); /**< called before physics are run every frame */
+void PR_EXPORT(EndFrame)(void); /**< called after physics are run every frame */
+void PR_EXPORT(ClientStartFrame)(entity_t *self); /**< called for each client before physics are run every frame */
+void PR_EXPORT(ClientEndFrame)(entity_t *self); /**< called for each client after physics are run every frame */
+void PR_EXPORT(ClientConnect)(entity_t *self); /**< called for each client when they have fully connected */
+void PR_EXPORT(ClientDisconnect)(entity_t *self); /**< called for each client when they disconnect */
+void PR_EXPORT(ClientSetNewParms)(entity_t *self); /**< called for each client when starting a new level unit */
+void PR_EXPORT(ClientSetChangeParms)(entity_t *self); /**< called for each client when they're about to go through a level transition */
+#endif
+#ifdef CLIENT
+void PR_EXPORT(DrawHud)(int w, int h); /**< called each frame for drawing the hud */
 #endif
 
 #ifdef __cplusplus
