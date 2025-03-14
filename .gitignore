@@ -1,2 +1,4 @@
 untracked/
 cmake-build*/
+src/progs/*.o
+src/progs/*.wasm
