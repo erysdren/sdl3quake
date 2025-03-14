@@ -50,9 +50,77 @@ extern "C" {
 #define WASM_EXPORT(n) __attribute__((export_name(#n), used, visibility("default"))) n
 #define WASM_IMPORT(n) __attribute__((import_module("env"), import_name(#n))) n
 
+/* builtin functions */
+void WASM_IMPORT(makevectors)(vec3_t ang);
+void WASM_IMPORT(setorigin)(entity_t e, vec3_t o);
+void WASM_IMPORT(setmodel)(entity_t e, string_t m);
+void WASM_IMPORT(setsize)(entity_t e, vec3_t min, vec3_t max);
+float WASM_IMPORT(random)(void);
+void WASM_IMPORT(sound)(entity_t e, float chan, string_t samp, float vol, float atten);
+void WASM_IMPORT(normalize)(vec3_t v, vec3_t out);
+void WASM_IMPORT(error)(string_t e);
+void WASM_IMPORT(objerror)(string_t e);
+float WASM_IMPORT(vlen)(vec3_t v);
+float WASM_IMPORT(vectoyaw)(vec3_t v);
+entity_t WASM_IMPORT(spawn)(void);
+void WASM_IMPORT(remove)(entity_t e);
+void WASM_IMPORT(traceline)(vec3_t v1, vec3_t v2, float nomonsters, entity_t forent);
+entity_t WASM_IMPORT(checkclient)(void);
+entity_t WASM_IMPORT(find)(entity_t start, string_t fld, string_t match);
+string_t WASM_IMPORT(precache_sound)(string_t s);
+string_t WASM_IMPORT(precache_model)(string_t s);
+void WASM_IMPORT(stuffcmd)(entity_t client, string_t s);
+entity_t WASM_IMPORT(findradius)(vec3_t org, float rad);
+void WASM_IMPORT(bprint)(string_t s);
+void WASM_IMPORT(sprint)(entity_t client, string_t s);
+void WASM_IMPORT(dprint)(string_t s);
+string_t WASM_IMPORT(ftos)(float f);
+string_t WASM_IMPORT(vtos)(vec3_t v);
+void WASM_IMPORT(coredump)(void);
+void WASM_IMPORT(traceon)(void);
+void WASM_IMPORT(traceoff)(void);
+void WASM_IMPORT(eprint)(entity_t e);
+float WASM_IMPORT(walkmove)(float yaw, float dist);
+float WASM_IMPORT(droptofloor)(void);
+void WASM_IMPORT(lightstyle)(float style, string_t value);
+#define rint(f) __builtin_rint(f)
+#define floor(f) __builtin_floor(f)
+#define ceil(f) __builtin_ceil(f)
+float WASM_IMPORT(checkbottom)(entity_t e);
+float WASM_IMPORT(pointcontents)(vec3_t v);
+#define fabs(f) __builtin_fabs(f)
+void WASM_IMPORT(aim)(entity_t e, float speed, vec3_t out);
+float WASM_IMPORT(cvar)(string_t s);
+void WASM_IMPORT(localcmd)(string_t s);
+entity_t WASM_IMPORT(nextent)(entity_t e);
+void WASM_IMPORT(particle)(vec3_t o, vec3_t d, float color, float count);
+void WASM_IMPORT(ChangeYaw)(void);
+void WASM_IMPORT(vectoangles)(vec3_t v, vec3_t out);
+void WASM_IMPORT(WriteByte)(float to, float f);
+void WASM_IMPORT(WriteChar)(float to, float f);
+void WASM_IMPORT(WriteShort)(float to, float f);
+void WASM_IMPORT(WriteLong)(float to, float f);
+void WASM_IMPORT(WriteCoord)(float to, float f);
+void WASM_IMPORT(WriteAngle)(float to, float f);
+void WASM_IMPORT(WriteString)(float to, string_t s);
+void WASM_IMPORT(WriteEntity)(float to, entity_t s);
+void WASM_IMPORT(movetogoal)(float step);
+string_t WASM_IMPORT(precache_file)(string_t s);
+void WASM_IMPORT(makestatic)(entity_t e);
+void WASM_IMPORT(changelevel)(string_t s);
+void WASM_IMPORT(cvar_set)(string_t var, string_t val);
+void WASM_IMPORT(centerprint)(entity_t client, string_t s);
+void WASM_IMPORT(ambientsound)(vec3_t pos, string_t samp, float vol, float atten);
+string_t WASM_IMPORT(precache_model2)(string_t s);
+string_t WASM_IMPORT(precache_sound2)(string_t s);
+string_t WASM_IMPORT(precache_file2)(string_t s);
+void WASM_IMPORT(setspawnparms)(entity_t e);
+
 /* constants */
-static const float FALSE = 0;
-static const float TRUE = 1;
+enum : int32_t {
+	FALSE = 0,
+	TRUE = 1
+};
 
 /* edict.flags */
 enum : int32_t {
