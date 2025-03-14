@@ -41,7 +41,14 @@ void ClientConnect(void)
 
 void PutClientInServer(void)
 {
-
+	globals.self->classname = "player";
+	globals.self->health = 100;
+	globals.self->takedamage = DAMAGE_AIM;
+	globals.self->solid = SOLID_SLIDEBOX;
+	globals.self->movetype = MOVETYPE_WALK;
+	globals.self->max_health = 100;
+	globals.self->flags = FL_CLIENT;
+	globals.self->effects = 0;
 }
 
 void ClientDisconnect(void)
