@@ -50,6 +50,20 @@ extern "C" {
 #define WASM_EXPORT(n) __attribute__((export_name(#n), used, visibility("default"))) n
 #define WASM_IMPORT(n) __attribute__((import_module("env"), import_name(#n))) n
 
+/* main.c */
+extern globalvars_t globals;
+
+/* client.c */
+void PlayerPreThink(void);
+void PlayerPostThink(void);
+void ClientKill(void);
+void ClientConnect(void);
+void PutClientInServer(void);
+void ClientDisconnect(void);
+
+/* world.c */
+void StartFrame(void);
+
 #ifdef __cplusplus
 }
 #endif

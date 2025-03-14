@@ -19,19 +19,7 @@ along with this program; if not, see https://www.gnu.org/licenses/
 
 #include "defs.h"
 
-globalvars_t globals;
-
-globalvars_t *WASM_EXPORT(GetGameAPI)(void)
+void StartFrame(void)
 {
-	__builtin_memset(&globals, 0, sizeof(globalvars_t));
 
-	globals.StartFrame = StartFrame;
-	globals.PlayerPreThink = PlayerPreThink;
-	globals.PlayerPostThink = PlayerPostThink;
-	globals.ClientKill = ClientKill;
-	globals.ClientConnect = ClientConnect;
-	globals.PutClientInServer = PutClientInServer;
-	globals.ClientDisconnect = ClientDisconnect;
-
-	return &globals;
 }

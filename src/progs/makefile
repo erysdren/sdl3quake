@@ -2,7 +2,7 @@ CC=clang
 override CFLAGS+=-std=c23 --target=wasm32 -nostdlib -mbulk-memory -DSERVER
 override LDFLAGS+=-Wl,--no-entry
 
-OBJ=main.o
+OBJ=client.o main.o world.o
 
 all: clean progs.wasm
 
