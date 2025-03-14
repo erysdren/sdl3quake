@@ -178,6 +178,8 @@ static const vec3_t VEC_HULL_MAX = {16, 16, 32};
 static const vec3_t VEC_HULL2_MIN = {-32, -32, -24};
 static const vec3_t VEC_HULL2_MAX = {32, 32, 64};
 
+#define VectorCopy(dst, src) __builtin_memcpy(dst, src, sizeof(vec3_t))
+
 /* main.c */
 extern globalvars_t globals;
 
