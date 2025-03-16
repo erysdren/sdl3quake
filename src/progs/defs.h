@@ -38,19 +38,62 @@ extern "C" {
 #error only the wasm32 target is supported
 #endif
 
-/* standard includes */
+/*
+ * standard includes
+ */
+
 #include <stddef.h>
 #include <stdint.h>
 #include <stdarg.h>
 
-/* include engine progdefs */
+/*
+ * engine progdefs
+ */
+
 #include "../progdefs.h"
 
-/* import/export helper macros */
-#define WASM_EXPORT(n) __attribute__((export_name(#n), used, visibility("default"))) n
-#define WASM_IMPORT(n) __attribute__((import_module("env"), import_name(#n))) n
+/*
+ * wasm macros
+ */
 
-/* builtin functions */
+#define WASM_EXPORT(n) __attribute((export_name(#n), used, visibility("default"))) n
+#define WASM_IMPORT(n) __attribute((import_module("env"), import_name(#n))) n
+
+/*
+ * builtin funcitons provided by the compiler (hopefully)
+ */
+
+#define rint(f) __builtin_rint(f)
+#define floor(f) __builtin_floor(f)
+#define ceil(f) __builtin_ceil(f)
+#define fabs(f) __builtin_fabs(f)
+#define memcpy(dst, src, n) __builtin_memcpy(dst, src, n)
+#define memset(dst, val, n) __builtin_memset(dst, val, n)
+#define strlen(s) __builtin_strlen(s)
+#define strcpy(dst, src) __builtin_strcpy(dst, src)
+#define strncpy(dst, src, n) __builtin_strncpy(dst, src, n)
+
+/*
+ * vector math
+ */
+
+#define VectorCopy(dst, src) memcpy(dst, src, sizeof(vec3_t))
+#define VectorDot(a, b) ((a)[0] * (b)[0] + (a)[1] * (b)[1] + (a)[2] * (b)[2])
+#define VectorLength(b) VectorDot(v, v)
+
+static inline void VectorCross(vec3_t dst, vec3_t a, vec3_t b)
+{
+	vec3_t c;
+	c[0] = a[1] * b[2] - a[2] * b[1];
+	c[1] = a[2] * b[0] - a[0] * b[2];
+	c[2] = a[0] * b[1] - a[1] * b[0];
+	VectorCopy(dst, c);
+}
+
+/*
+ * builtin functions
+ */
+
 void WASM_IMPORT(makevectors)(vec3_t ang);
 void WASM_IMPORT(setorigin)(entity_t e, vec3_t o);
 void WASM_IMPORT(setmodel)(entity_t e, string_t m);
@@ -83,12 +126,8 @@ void WASM_IMPORT(eprint)(entity_t e);
 float WASM_IMPORT(walkmove)(float yaw, float dist);
 float WASM_IMPORT(droptofloor)(void);
 void WASM_IMPORT(lightstyle)(float style, string_t value);
-#define rint(f) __builtin_rint(f)
-#define floor(f) __builtin_floor(f)
-#define ceil(f) __builtin_ceil(f)
 float WASM_IMPORT(checkbottom)(entity_t e);
 float WASM_IMPORT(pointcontents)(vec3_t v);
-#define fabs(f) __builtin_fabs(f)
 void WASM_IMPORT(aim)(entity_t e, float speed, vec3_t out);
 float WASM_IMPORT(cvar)(string_t s);
 void WASM_IMPORT(localcmd)(string_t s);
@@ -116,10 +155,10 @@ string_t WASM_IMPORT(precache_sound2)(string_t s);
 string_t WASM_IMPORT(precache_file2)(string_t s);
 void WASM_IMPORT(setspawnparms)(entity_t e);
 
-#define memcpy(dst, src, n) __builtin_memcpy(dst, src, n)
-#define memset(dst, val, n) __builtin_memset(dst, val, n)
+/*
+ * constants
+ */
 
-/* constants */
 enum : int32_t {
 	FALSE = 0,
 	TRUE = 1
@@ -235,13 +274,6 @@ enum : int32_t {
 	STATE_DOWN = 3,
 };
 
-enum : int32_t {
-	AS_STRAIGHT = 1,
-	AS_SLIDING = 2,
-	AS_MELEE = 3,
-	AS_MISSILE = 4
-};
-
 static const vec3_t VEC_ORIGIN = {0, 0, 0};
 static const vec3_t VEC_HULL_MIN = {-16, -16, -24};
 static const vec3_t VEC_HULL_MAX = {16, 16, 32};
@@ -249,7 +281,86 @@ static const vec3_t VEC_HULL_MAX = {16, 16, 32};
 static const vec3_t VEC_HULL2_MIN = {-32, -32, -24};
 static const vec3_t VEC_HULL2_MAX = {32, 32, 64};
 
-#define VectorCopy(dst, src) memcpy(dst, src, sizeof(vec3_t))
+/* protocol bytes */
+enum : uint8_t {
+	SVC_TEMPENTITY = 23,
+	SVC_KILLEDMONSTER = 27,
+	SVC_FOUNDSECRET = 28,
+	SVC_INTERMISSION = 30,
+	SVC_FINALE = 31,
+	SVC_CDTRACK = 32,
+	SVC_SELLSCREEN = 33
+};
+
+enum : int32_t {
+	TE_SPIKE = 0,
+	TE_SUPERSPIKE = 1,
+	TE_GUNSHOT = 2,
+	TE_EXPLOSION = 3,
+	TE_TAREXPLOSION = 4,
+	TE_LIGHTNING1 = 5,
+	TE_LIGHTNING2 = 6,
+	TE_WIZSPIKE = 7,
+	TE_KNIGHTSPIKE = 8,
+	TE_LIGHTNING3 = 9,
+	TE_LAVASPLASH = 10,
+	TE_TELEPORT = 11
+};
+
+/*
+ * sound channels
+ * channel 0 never willingly overrides
+ * other channels(1-7) allways override a playing sound on that channel
+ */
+enum : int32_t {
+	CHAN_AUTO = 0,
+	CHAN_WEAPON = 1,
+	CHAN_VOICE = 2,
+	CHAN_ITEM = 3,
+	CHAN_BODY = 4
+};
+
+enum : int32_t {
+	ATTN_NONE = 0,
+	ATTN_NORM = 1,
+	ATTN_IDLE = 2,
+	ATTN_STATIC = 3
+};
+
+/* update types */
+enum : int32_t {
+	UPDATE_GENERAL = 0,
+	UPDATE_STATIC = 1,
+	UPDATE_BINARY = 2,
+	UPDATE_TEMP = 3
+};
+
+/* entity effects */
+enum : int32_t {
+	EF_BRIGHTFIELD = 1,
+	EF_MUZZLEFLASH = 2,
+	EF_BRIGHTLIGHT = 4,
+	EF_DIMLIGHT = 8
+};
+
+/* messages */
+enum : int32_t {
+	MSG_BROADCAST = 0, /* unreliable to all */
+	MSG_ONE = 1, /* reliable to one(msg_entity) */
+	MSG_ALL = 2, /* reliable to all */
+	MSG_INIT = 3 /* write to the init string */
+};
+
+enum : int32_t {
+	AS_STRAIGHT = 1,
+	AS_SLIDING = 2,
+	AS_MELEE = 3,
+	AS_MISSILE = 4
+};
+
+/*
+ * progs exports
+ */
 
 /* main.c */
 extern globalvars_t globals;

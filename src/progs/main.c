@@ -23,7 +23,7 @@ globalvars_t globals;
 
 globalvars_t *WASM_EXPORT(GetGameAPI)(void)
 {
-	__builtin_memset(&globals, 0, sizeof(globalvars_t));
+	memset(&globals, 0, sizeof(globalvars_t));
 
 	globals.StartFrame = StartFrame;
 	globals.PlayerPreThink = PlayerPreThink;
