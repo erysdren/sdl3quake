@@ -37,6 +37,16 @@ int				pr_edict_size;	// in bytes
 
 uint16_t		pr_crc;
 
+static struct wasm_state {
+	void *programdata;
+	int len_programdata;
+	RuntimeInitArgs init_args;
+	wasm_module_t module;
+	wasm_module_inst_t module_inst;
+	wasm_exec_env_t exec_env;
+	wasm_function_inst_t GetGameAPI;
+} wasm_state;
+
 int		type_size[8] = {1,sizeof(string_t)/4,1,3,1,1,sizeof(func_t)/4,sizeof(void *)/4};
 
 ddef_t *ED_FieldAtOfs (int ofs);
