@@ -23,6 +23,10 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include "errno.h"
 #include "sdl3quake.h"
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 qboolean isDedicated;
 
 /*
@@ -152,7 +156,10 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
 }
 
 
-[[ noreturn ]] void Sys_Error (char *error, ...)
+#ifndef __EMSCRIPTEN__
+[[ noreturn ]]
+#endif
+void Sys_Error (char *error, ...)
 {
 	va_list         argptr;
 
@@ -162,7 +169,11 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length)
 	va_end (argptr);
 	printf ("\n");
 
+#ifdef __EMSCRIPTEN__
+	emscripten_cancel_main_loop();
+#else
 	exit (1);
+#endif
 }
 
 void Sys_Printf (char *fmt, ...)
@@ -177,7 +188,11 @@ void Sys_Printf (char *fmt, ...)
 void Sys_Quit (void)
 {
 	QG_Quit();
+#ifdef __EMSCRIPTEN__
+	emscripten_cancel_main_loop();
+#else
 	exit (0);
+#endif
 }
 
 double Sys_FloatTime (void)

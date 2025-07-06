@@ -6,7 +6,9 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 find_package(Math)
 
 # get SDL3
-find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
+if(NOT EMSCRIPTEN)
+	find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3-shared)
+endif()
 
 # build-time options
 set(SDL3QUAKE_GAMEDIR "id1" CACHE STRING "Base game directory")
@@ -26,14 +28,25 @@ file(GLOB SDL3QUAKE_SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/src/*.c")
 # setup executable
 add_executable(sdl3quake ${SDL3QUAKE_SOURCES})
 
+# emscripten options
+if(EMSCRIPTEN)
+	target_compile_options(sdl3quake PRIVATE -sUSE_SDL=3)
+	target_link_options(sdl3quake PRIVATE -sUSE_SDL=3)
+	target_link_options(sdl3quake PRIVATE -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=1gb -sSTACK_SIZE=10mb)
+	target_link_options(sdl3quake PRIVATE --preload-file id1)
+	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		target_compile_options(sdl3quake PRIVATE -gsource-map)
+	endif()
+endif()
+
 # link stuff
-target_link_libraries(sdl3quake PUBLIC
-	SDL3::SDL3
+target_link_libraries(sdl3quake PRIVATE
+	$<TARGET_NAME_IF_EXISTS:SDL3::SDL3>
 	$<TARGET_NAME_IF_EXISTS:Math::Math>
 )
 
 # add config options
-target_compile_definitions(sdl3quake PUBLIC
+target_compile_definitions(sdl3quake PRIVATE
 	GAMEDIR=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEDIR}>$<QUOTE>
 	GAMETITLE=$<QUOTE>${SDL3QUAKE_GAMETITLE}$<QUOTE>
 	GAMEEXEC=$<QUOTE>$<PATH:CMAKE_PATH,${SDL3QUAKE_GAMEEXEC}>$<QUOTE>
@@ -50,7 +63,7 @@ set_target_properties(sdl3quake PROPERTIES C_STANDARD_REQUIRED ON C_STANDARD 23)
 
 # extra warnings
 if(NOT MSVC)
-	target_compile_options(sdl3quake PUBLIC -Wall)
+	target_compile_options(sdl3quake PRIVATE -Wall)
 endif()
 
 # address sanitizer
@@ -58,3 +71,8 @@ add_library(ASAN::ASAN IMPORTED INTERFACE)
 target_compile_options(ASAN::ASAN INTERFACE -fsanitize=address $<$<NOT:$<COMPILE_LANG_AND_ID:C,MSVC>>:-fno-omit-frame-pointer>)
 target_link_options(ASAN::ASAN INTERFACE -fsanitize=address)
 target_link_libraries(sdl3quake PRIVATE $<$<BOOL:${SDL3QUAKE_USE_ASAN}>:ASAN::ASAN>)
+
+# copy index.html
+if(EMSCRIPTEN)
+	file(COPY ${PROJECT_SOURCE_DIR}/emscripten/index.html DESTINATION ${PROJECT_BINARY_DIR})
+endif()

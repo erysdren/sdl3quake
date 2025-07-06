@@ -46,7 +46,10 @@ void Sys_MakeCodeWriteable (unsigned long startaddr, unsigned long length);
 //
 void Sys_DebugLog(char *file, char *fmt, ...);
 
-[[ noreturn ]] void Sys_Error (char *error, ...);
+#ifndef __EMSCRIPTEN__
+[[ noreturn ]]
+#endif
+void Sys_Error (char *error, ...);
 // an error will cause the entire program to exit
 
 void Sys_Printf (char *fmt, ...);

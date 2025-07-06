@@ -25,6 +25,10 @@ along with this program; if not, see https://www.gnu.org/licenses/
 #include <SDL3/SDL.h>
 #include <stdint.h>
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
+
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 static SDL_Texture *texture = NULL;
@@ -346,78 +350,93 @@ void QG_SetPalette(unsigned char pal[768])
 	SDL_SetSurfacePalette(surface8, palette);
 }
 
-int main(int argc, char *argv[])
+#ifndef __EMSCRIPTEN__
+static int running = 1;
+#endif
+
+static void main_loop(void)
 {
-	double oldtime, newtime;
-	int running = 1;
 	int button;
+	double newtime;
+	static double oldtime = 0;
+	if (oldtime == 0)
+		oldtime = (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency() - 0.1;
 
-	QG_Create(argc, argv);
-
-	oldtime = (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency() - 0.1;
-	while (running)
+	// poll events
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
 	{
-		// poll events
-		SDL_Event event;
-		while (SDL_PollEvent(&event))
+		switch (event.type)
 		{
-			switch (event.type)
-			{
-				case SDL_EVENT_QUIT:
-					running = 0;
-					break;
-				case SDL_EVENT_KEY_DOWN:
-				case SDL_EVENT_KEY_UP:
-					(void) KeyPush((event.type == SDL_EVENT_KEY_DOWN), ConvertToQuakeKey(event.key.key));
-					break;
-				case SDL_EVENT_MOUSE_MOTION:
-					mouse_x += event.motion.xrel;
-					mouse_y += event.motion.yrel;
-					break;
-				case SDL_EVENT_MOUSE_BUTTON_DOWN:
-				case SDL_EVENT_MOUSE_BUTTON_UP:
-					button = ConvertToQuakeButton(event.button.button);
-					if (button != -1) {
-						(void) KeyPush((event.type == SDL_EVENT_MOUSE_BUTTON_DOWN), button);
-					}
-					break;
-				case SDL_EVENT_MOUSE_WHEEL:
-					if (event.wheel.y > 0)
-					{
-						(void) KeyPush(1, K_MWHEELUP);
-						(void) KeyPush(0, K_MWHEELUP);
-					}
-					else if (event.wheel.y < 0)
-					{
-						(void) KeyPush(1, K_MWHEELDOWN);
-						(void) KeyPush(0, K_MWHEELDOWN);
-					}
-					break;
-				case SDL_EVENT_JOYSTICK_AXIS_MOTION:
-					if (event.jaxis.axis < QUAKEGENERIC_JOY_MAX_AXES) {
-						joy_axes[event.jaxis.axis] = event.jaxis.value / 32767.0f;
-					}
-					break;
+			case SDL_EVENT_QUIT:
+#ifdef __EMSCRIPTEN__
+				emscripten_cancel_main_loop();
+#else
+				running = 0;
+#endif
+				break;
+			case SDL_EVENT_KEY_DOWN:
+			case SDL_EVENT_KEY_UP:
+				(void) KeyPush((event.type == SDL_EVENT_KEY_DOWN), ConvertToQuakeKey(event.key.key));
+				break;
+			case SDL_EVENT_MOUSE_MOTION:
+				mouse_x += event.motion.xrel;
+				mouse_y += event.motion.yrel;
+				break;
+			case SDL_EVENT_MOUSE_BUTTON_DOWN:
+			case SDL_EVENT_MOUSE_BUTTON_UP:
+				button = ConvertToQuakeButton(event.button.button);
+				if (button != -1) {
+					(void) KeyPush((event.type == SDL_EVENT_MOUSE_BUTTON_DOWN), button);
+				}
+				break;
+			case SDL_EVENT_MOUSE_WHEEL:
+				if (event.wheel.y > 0)
+				{
+					(void) KeyPush(1, K_MWHEELUP);
+					(void) KeyPush(0, K_MWHEELUP);
+				}
+				else if (event.wheel.y < 0)
+				{
+					(void) KeyPush(1, K_MWHEELDOWN);
+					(void) KeyPush(0, K_MWHEELDOWN);
+				}
+				break;
+			case SDL_EVENT_JOYSTICK_AXIS_MOTION:
+				if (event.jaxis.axis < QUAKEGENERIC_JOY_MAX_AXES) {
+					joy_axes[event.jaxis.axis] = event.jaxis.value / 32767.0f;
+				}
+				break;
 
-				case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
-				case SDL_EVENT_JOYSTICK_BUTTON_UP:
-					button = event.jbutton.button + ((event.jbutton.button < 4) ? K_JOY1 : K_AUX1);
-					(void) KeyPush((event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN), button);
-					break;
-			}
+			case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
+			case SDL_EVENT_JOYSTICK_BUTTON_UP:
+				button = event.jbutton.button + ((event.jbutton.button < 4) ? K_JOY1 : K_AUX1);
+				(void) KeyPush((event.type == SDL_EVENT_JOYSTICK_BUTTON_DOWN), button);
+				break;
 		}
-
-		// HACKHACK: disable mouselook while in menu
-		if (key_dest == key_menu)
-			SDL_SetWindowRelativeMouseMode(window, false);
-		else
-			SDL_SetWindowRelativeMouseMode(window, true);
-
-		// Run the frame at the correct duration.
-		newtime = (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency();
-		QG_Tick(newtime - oldtime);
-		oldtime = newtime;
 	}
 
+	// HACKHACK: disable mouselook while in menu
+	if (key_dest == key_menu)
+		SDL_SetWindowRelativeMouseMode(window, false);
+	else
+		SDL_SetWindowRelativeMouseMode(window, true);
+
+	// Run the frame at the correct duration.
+	newtime = (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency();
+	QG_Tick(newtime - oldtime);
+	oldtime = newtime;
+}
+
+int main(int argc, char *argv[])
+{
+	QG_Create(argc, argv);
+
+#ifdef __EMSCRIPTEN__
+	emscripten_set_main_loop(main_loop, 0, 1);
+#else
+	while (running)
+		main_loop();
+#endif
 	return 0;
 }
